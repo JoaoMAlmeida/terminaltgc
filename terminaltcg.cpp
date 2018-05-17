@@ -108,17 +108,17 @@ bool campoDoJogadorEstaCheio(int jogador){
 	return true;
 }
 
-int posicaoVazia(int jogadorAtual){
+int getPosicaoVaziaNoCampo(int jogador){
 
-	if (jogadorAtual == (int) 1) { //retorna posicao vazia para o jogador 1
+	if (jogador == (int) 1) { //retorna posicao vazia para o jogador 1
 		for(size_t i = 0; i < 3; i++){
 			if(tabuleiro.cartasJogador1[i] -> nome.compare(cartaNula.nome) == 0){
 				return i;
 			}
 		}
-	} else if (jogadorAtual == (int) 2) { //retorna posicao vazia para o jogador 2
+	} else if (jogador == (int) 2) { //retorna posicao vazia para o jogador 2
 		for(size_t i = 0; i < 3; i++){
-			if(tabuleiro.cartasJogador1[i] -> nome.compare(cartaNula.nome) == 0){
+			if(tabuleiro.cartasJogador2[i] -> nome.compare(cartaNula.nome) == 0){
 				return i;
 			}
 		}
@@ -128,60 +128,67 @@ int posicaoVazia(int jogadorAtual){
 }
 
 //Recebe o jogador que vai jogar uma carta e realiza a jogada
-void jogarUmaCarta(int jogadorAtual) {
+void jogarUmaCarta(int jogador) {
 	string opcao;
 	std::cout << "Escolha a carta a jogar (1, 2 ou 3)" << '\n';
 	getline(cin, opcao);
 
 	switch(atoi(opcao.c_str())){
 		case 1: //Jogar a carta da primeira posicao
-			if(jogadorAtual == (int) 1){
+			if(jogador == (int) 1){
 				if((jogador1.cartasMao[0] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao zero nao � a carta nula
-					tabuleiro.cartasJogador1[posicaoVazia(jogadorAtual)] = jogador1.cartasMao[0];
+					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[0];
+					std::cout << "Voce invocou o " << jogador1.cartasMao[0] -> nome << '\n';
 					jogador1.cartasMao[0] = &cartaNula;
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
-			} else if(jogadorAtual == (int) 2){
+			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[0] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao zero nao � a carta nula
-					tabuleiro.cartasJogador2[posicaoVazia(jogadorAtual)] = jogador2.cartasMao[0];
+					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[0];
+					std::cout << "Voce invocou o " << jogador2.cartasMao[0] -> nome << '\n';
 					jogador2.cartasMao[0] = &cartaNula;
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
 			}
 			break;
 		case 2: //Jogar a carta da segunda posicao
-			if(jogadorAtual == (int) 1){
+			if(jogador == (int) 1){
 				if((jogador1.cartasMao[1] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao um nao � a carta nula
-					tabuleiro.cartasJogador1[posicaoVazia(jogadorAtual)] = jogador1.cartasMao[1];
+					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[1];
+					std::cout << "Voce invocou o " << jogador1.cartasMao[1] -> nome << '\n';
 					jogador1.cartasMao[1] = &cartaNula;
+
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
-			} else if(jogadorAtual == (int) 2){
+			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[1] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao um nao � a carta nula
-					tabuleiro.cartasJogador2[posicaoVazia(jogadorAtual)] = jogador2.cartasMao[1];
+					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[1];
+					std::cout << "Voce invocou o " << jogador2.cartasMao[1] -> nome << '\n';
 					jogador2.cartasMao[1] = &cartaNula;
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
 			}
 			break;
 		case 3: //Jogar a carta da terceira posicao
-			if(jogadorAtual == (int) 1){
+			if(jogador == (int) 1){
 				if((jogador1.cartasMao[2] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao dois nao � a carta nula
-					tabuleiro.cartasJogador1[posicaoVazia(jogadorAtual)] = jogador1.cartasMao[2];
+					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[2];
+					std::cout << "Voce invocou o " << jogador1.cartasMao[2] -> nome << '\n';
 					jogador1.cartasMao[2] = &cartaNula;
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
-			} else if(jogadorAtual == (int) 2){
+			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[2] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao dois nao � a carta nula
-					tabuleiro.cartasJogador2[posicaoVazia(jogadorAtual)] = jogador2.cartasMao[2];
+					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[2];
+					std::cout << "Voce invocou o " << jogador2.cartasMao[2] -> nome << '\n';
 					jogador2.cartasMao[2] = &cartaNula;
 				} else {
-					std::cout << "Campo Cheio." << '\n';
+					std::cout << "Tabuleiro Cheio." << '\n';
 				}
 			}
 			break;
@@ -190,6 +197,53 @@ void jogarUmaCarta(int jogadorAtual) {
 			break;
 	}
 }
+
+bool jogadorTemMenosQue3CartasNaMao(int jogador){
+	for(size_t i = 0; i < 3; i++){
+		if(jogador == (int) 1){
+			if(jogador1.cartasMao[i] -> nome.compare(cartaNula.nome) == 0){
+				return true;
+			}
+		}else if(jogador == (int) 2){
+			if(jogador2.cartasMao[i] -> nome.compare(cartaNula.nome) == 0){
+				return true;
+			}
+		}
+
+	}
+	return false;
+}
+
+int getPosicaoVaziaNaMao(int jogador){
+	if (jogador == (int) 1) { //retorna posicao vazia para o jogador 1
+		for(size_t i = 0; i < 3; i++){
+			if(jogador1.cartasMao[i] -> nome.compare(cartaNula.nome) == 0){
+				return i;
+			}
+		}
+	} else if (jogador == (int) 2) { //retorna posicao vazia para o jogador 2
+		for(size_t i = 0; i < 3; i++){
+			if(jogador2.cartasMao[i] -> nome.compare(cartaNula.nome) == 0){
+				return i;
+			}
+		}
+	}
+
+	return 0;
+}
+
+void puxarUmaCarta(int jogador, CartaStr cartas[]){
+	int indiceAleatorio = rand() % 3;
+	if(jogador == (int) 1){
+		jogador1.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
+
+	} else if(jogador == (int) 2){
+		jogador2.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
+	}
+
+	std::cout << "Voce puxou " << cartas[indiceAleatorio].nome << '\n';
+}
+
 
 
 
@@ -247,11 +301,14 @@ int main() {
   bool fimDeJogo = false;
   while(!fimDeJogo) { // Mantem o jogo rodando.
 
-
-
     if (jogador1.vida <= 0 || jogador2.vida <= 0) {
       fimDeJogo = true;
     }
+
+    if(jogadorTemMenosQue3CartasNaMao(1)){
+    		puxarUmaCarta(1, cartas);
+    }
+
     // Tabuleiro para o jogador 1
     std::cout << "-----------------------------------------" << '\n';
     std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
@@ -315,11 +372,15 @@ int main() {
       }
     }
 
+    if(jogadorTemMenosQue3CartasNaMao(2)){
+    		puxarUmaCarta(2, cartas);
+    }
+
     // Tabuleiro para o jogador 2
     std::cout << "-----------------------------------------" << '\n';
     std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
     std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
-    std::cout << "--------------------------------------------Mao: Jogador 2--------------------------------------------" << '\n';
+    std::cout << "---------------Mao: Jogador 2---------------" << '\n';
     for(size_t i = 0; i < 3; i++){
         std::cout << "Carta " << i+1 << ": " << "NOME: "<< jogador2.cartasMao[i] -> nome << " ";
         std::cout << "" << '\n';
