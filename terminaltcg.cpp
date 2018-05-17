@@ -375,6 +375,9 @@ int main() {
     std::cout << "---------------Mao: Jogador 1---------------" << '\n';
     for(size_t i = 0; i < 3; i++){
         std::cout << "Carta " << i+1 << ": " << "NOME: "<< jogador1.cartasMao[i] -> nome << " ";
+        std::cout << "ATAQUE " <<": "<< jogador1.cartasMao[i] -> ataque << " ";
+        std::cout << "VIDA " << ": "<< jogador1.cartasMao[i] -> vida << " ";
+        std::cout << "PODER " <<  ": " << jogador1.cartasMao[i] -> ataqueEspecial << " ";
         std::cout << "" << '\n';
     }
     std::cout << "-------------------------------------------Tabuleiro: Jogador 1---------------------------------------" << '\n';
@@ -444,6 +447,9 @@ int main() {
     std::cout << "---------------Mao: Jogador 2---------------" << '\n';
     for(size_t i = 0; i < 3; i++){
         std::cout << "Carta " << i+1 << ": " << "NOME: "<< jogador2.cartasMao[i] -> nome << " ";
+        std::cout << "ATAQUE " <<": "<< jogador2.cartasMao[i] -> ataque << " ";
+        std::cout << "VIDA " << ": "<< jogador2.cartasMao[i] -> vida << " ";
+        std::cout << "PODER " << ": " << jogador2.cartasMao[i] -> ataqueEspecial << " ";
         std::cout << "" << '\n';
     }
     std::cout << "-------------------------------------------Tabuleiro: Jogador 1---------------------------------------" << '\n';
