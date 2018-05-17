@@ -19,7 +19,7 @@ struct CartaStr {
   string ataqueEspecial;
   bool atacarBool;
 }reiDaMontanha, loboCeleste, espectroNegro,fortex, ogroNegro,mercurioAlado,
-cortanaAAntipatica, ciriAEngracada, dellOFort, HPn01, Javas, CPlusivel, AntonelaASereia,  cartaNula;
+cortanaAAntipatica, ciriAEngracada, dellOFort, HPn01, Javas, CPlusivel, AntonelaASereia, cartaNula;
 
 struct JogadorStr {
   string nome;
@@ -61,7 +61,7 @@ void topo(){
   std::cout << "-----------------------------------------" << '\n';
   std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
   std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
-  
+
 
 }
 
@@ -91,8 +91,8 @@ void maoJogador2(){
 
 //view principal
 void vista(){
-  system("clear");
-  system("cls");
+  //system("clear");
+  //system("cls");
   topo();
   imprimeTabuleiro();
 
@@ -179,11 +179,11 @@ void atacarJogadorInimigo(int jogador){
     std::cout << "Carta nao existe." << '\n';
   }
   if(jogador == 1){
-  	telaJogador1();  	
+  	telaJogador1();
   }else{
   	telaJogador2();
   }
-  
+
 }
 
 // Usa uma carta do jogador para atacar uma carta adversaria.
@@ -232,9 +232,9 @@ void atacarCartaInimiga(int jogador){
   if ((jogador == 2 && tabuleiro.cartasJogador2[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
-  
+
    if(jogador == 1){
-  	telaJogador1();  	
+  	telaJogador1();
   }else{
   	telaJogador2();
   }
@@ -387,9 +387,9 @@ void jogarUmaCarta(int jogador) {
 			std::cout << "Comando Invalido." << '\n';
 			break;
 	}
-	
+
 	 if(jogador == 1){
-  	telaJogador1();  	
+  	telaJogador1();
   }else{
   	telaJogador2();
   }
@@ -463,85 +463,85 @@ void todasPodemAtacar(int jogador) {
 int main() {
 
   // Cartas:
- 
+
   reiDaMontanha.nome = "Rei da Montanha";
   reiDaMontanha.vida = 3;
   reiDaMontanha.ataque = 2;
   reiDaMontanha.ataqueEspecial = "Iniciativa"; //pode atacar no mesmo turno que foi colocada.
   reiDaMontanha.atacarBool = false;
-  
+
   loboCeleste.nome = "Lobo Celeste";
   loboCeleste.vida = 2;
   loboCeleste.ataque = 1;
   loboCeleste.ataqueEspecial = "Provocar"; //impede ataque direto ao jogador.
   loboCeleste.atacarBool = false;
-  
+
   espectroNegro.nome = "Espectro Negro";
   espectroNegro.vida = 1;
   espectroNegro.ataque = 1;
   espectroNegro.ataqueEspecial = "Ataque Duplo"; //ataca duas vezes.
   espectroNegro.atacarBool = false;
-  
+
   fortex.nome = "Fortex";
   fortex.vida = 5;
   fortex.ataque = 0;
-  fortex.ataqueEspecial = "Provocar"; 
+  fortex.ataqueEspecial = "Provocar";
   fortex.atacarBool = false;
-  
+
   ogroNegro.nome = "Ogro Negro";
   ogroNegro.vida = 2;
   ogroNegro.ataque = 1;
-  ogroNegro.ataqueEspecial = "Nenhum"; 
+  ogroNegro.ataqueEspecial = "Nenhum";
   ogroNegro.atacarBool = false;
-  
+
   mercurioAlado.nome = "Mercurio Alado";
   mercurioAlado.vida = 2;
   mercurioAlado.ataque = 1;
-  mercurioAlado.ataqueEspecial = "Iniciativa"; 
+  mercurioAlado.ataqueEspecial = "Iniciativa";
   mercurioAlado.atacarBool = false;
-  
+
   cortanaAAntipatica.nome = "Cortana A Antipatica";
   cortanaAAntipatica.vida = 4;
   cortanaAAntipatica.ataque = 1;
-  cortanaAAntipatica.ataqueEspecial = "Provocar"; 
+  cortanaAAntipatica.ataqueEspecial = "Provocar";
   cortanaAAntipatica.atacarBool = false;
-  
+
   ciriAEngracada.nome = "Ciri A Engracada";
   ciriAEngracada.vida = 1;
   ciriAEngracada.ataque = 3;
-  ciriAEngracada.ataqueEspecial = "iniciativa"; 
+  ciriAEngracada.ataqueEspecial = "Iniciativa";
   ciriAEngracada.atacarBool = false;
-  
+
   dellOFort.nome = "Dell O Fort";
   dellOFort.vida = 2;
   dellOFort.ataque = 2;
-  dellOFort.ataqueEspecial = "Iniciativa"; 
+  dellOFort.ataqueEspecial = "Iniciativa";
   dellOFort.atacarBool = false;
-  
+
   HPn01.nome = "HP n01";
   HPn01.vida = 3;
   HPn01.ataque = 6;
-  HPn01.ataqueEspecial = "Nenhum"; 
+  HPn01.ataqueEspecial = "Nenhum";
   HPn01.atacarBool = false;
-  
+
   Javas.nome = "Javas";
   Javas.vida = 1;
   Javas.ataque = 1;
-  Javas.ataqueEspecial = "Iniciativa"; 
+  Javas.ataqueEspecial = "Iniciativa";
   Javas.atacarBool = false;
-  
+
   CPlusivel.nome = "CPlusivel";
   CPlusivel.vida = 1;
   CPlusivel.ataque = 7;
-  CPlusivel.ataqueEspecial = "Nenhum"; 
+  CPlusivel.ataqueEspecial = "Nenhum";
   CPlusivel.atacarBool = false;
-  
+
   AntonelaASereia.nome = "Antonela A Sereia";
   AntonelaASereia.vida = 14;
   AntonelaASereia.ataque = 0;
-  AntonelaASereia.ataqueEspecial = "Provocar"; 
+  AntonelaASereia.ataqueEspecial = "Provocar";
   AntonelaASereia.atacarBool = false;
-  
+
   cartaNula.nome = "";
   cartaNula.ataqueEspecial = "";
   cartaNula.ataque = 0;
@@ -563,7 +563,7 @@ int main() {
   cartas[10] = Javas;
   cartas[11] = CPlusivel;
   cartas[12] = AntonelaASereia;
-  
+
 
 
   srand ( time(NULL) ); //necessario para gerar numeros aleatorios em rand()
@@ -630,7 +630,7 @@ int main() {
         telaJogador1();
         if (!campoDoJogadorEstaVazio(1)) {
           atacarJogadorInimigo(1);
-          
+
         } else {
           std::cout << "O tabuleiro esta vazio." << '\n';
         }
@@ -639,7 +639,7 @@ int main() {
         telaJogador1();
         if (!(campoDoJogadorEstaVazio(1)) && !(campoDoJogadorEstaVazio(2))) {
           atacarCartaInimiga(1);
-          
+
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
@@ -671,7 +671,7 @@ int main() {
         if((jogador2.jogarCartaBool) && !(campoDoJogadorEstaCheio(2))){
           jogarUmaCarta(2);
           jogador2.jogarCartaBool = false;
-         
+
         }else {
           std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
@@ -680,7 +680,7 @@ int main() {
         telaJogador2();
         if (!campoDoJogadorEstaVazio(2)) {
           atacarJogadorInimigo(2);
-          
+
         } else {
           std::cout << "O campo esta vazio." << '\n';
         }
@@ -689,7 +689,7 @@ int main() {
         telaJogador2();
         if (!(campoDoJogadorEstaVazio(2)) && !(campoDoJogadorEstaVazio(1))) {
           atacarCartaInimiga(2);
-          
+
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
@@ -715,4 +715,3 @@ int main() {
 
   return 0;
 }
-
