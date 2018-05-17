@@ -11,6 +11,7 @@
 using namespace std;
 
 // ####### ESTRUTURAS #######
+
 struct CartaStr {
   string nome;
   short vida;
@@ -34,6 +35,87 @@ struct TabuleiroStr {
 } tabuleiro;
 
 // ####### FUNCOES #######
+
+// Imprime o tabuleiro
+void imprimeTabuleiro(){
+  std::cout << "----------------Tabuleiro: Jogador 1----------" << '\n';
+  for (size_t i = 0; i < 3; i++) {
+    std::cout << "Carta " << i+1 << ": Nome: "<< tabuleiro.cartasJogador1[i] -> nome << " ";
+    std::cout << "Ataque: " << tabuleiro.cartasJogador1[i] -> ataque << " ";
+    std::cout << "Vida: " << tabuleiro.cartasJogador1[i] -> vida << " ";
+    std::cout << "Poder: " << tabuleiro.cartasJogador1[i] -> ataqueEspecial << '\n';
+    std::cout << "" << '\n';
+  }
+  std::cout << "----------------Tabuleiro: Jogador 2----------" << '\n';
+  for (size_t i = 0; i < 3; i++) {
+    std::cout << "Carta " << i+1 << ": Nome: " << tabuleiro.cartasJogador2[i] -> nome << " ";
+    std::cout << "Ataque: " << tabuleiro.cartasJogador2[i] -> ataque << " ";
+    std::cout << "Vida: " << tabuleiro.cartasJogador2[i] -> vida << " ";
+    std::cout << "Poder: " << tabuleiro.cartasJogador2[i] -> ataqueEspecial << '\n';
+    std::cout << "" << '\n';
+  }
+}
+//Imprime o topo
+void topo(){
+  // Tabuleiro para o jogador 1
+  std::cout << "-----------------------------------------" << '\n';
+  std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
+  std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
+  
+
+}
+
+void maoJogador1(){
+  std::cout << "---------------Mao: Jogador 1---------------" << '\n';
+  for(size_t i = 0; i < 3; i++){
+      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador1.cartasMao[i] -> nome << " ";
+      std::cout << "Ataque " <<": "<< jogador1.cartasMao[i] -> ataque << " ";
+      std::cout << "Vida " << ": "<< jogador1.cartasMao[i] -> vida << " ";
+      std::cout << "Poder " <<  ": " << jogador1.cartasMao[i] -> ataqueEspecial << " ";
+      std::cout << "" << '\n';
+  }
+  std::cout << "-------------------------------------------" << '\n';
+}
+
+void maoJogador2(){
+  std::cout << "---------------Mao: Jogador 2---------------" << '\n';
+  for(size_t i = 0; i < 3; i++){
+      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador2.cartasMao[i] -> nome << " ";
+      std::cout << "Ataque " <<": "<< jogador2.cartasMao[i] -> ataque << " ";
+      std::cout << "Vida " << ": "<< jogador2.cartasMao[i] -> vida << " ";
+      std::cout << "Poder " << ": " << jogador2.cartasMao[i] -> ataqueEspecial << " ";
+      std::cout << "" << '\n';
+  }
+  std::cout << "-------------------------------------------" << '\n';
+}
+
+//view principal
+void vista(){
+  system("clear");
+  system("cls");
+  topo();
+  imprimeTabuleiro();
+
+}
+
+
+// Imprime a mao do jogador 1
+
+void telaJogador1(){
+  vista();
+  maoJogador1();
+}
+
+void telaJogador2(){
+  vista();
+  maoJogador2();
+}
+
+
+
+
+
+
 //Verifica se o jogador inimigo tem alguma carta com Provocar.
 bool verificaProvocar(int jogador) {
   if (jogador == 1) {
@@ -96,6 +178,12 @@ void atacarJogadorInimigo(int jogador){
   if ((jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
+  if(jogador == 1){
+  	telaJogador1();  	
+  }else{
+  	telaJogador2();
+  }
+  
 }
 
 // Usa uma carta do jogador para atacar uma carta adversaria.
@@ -143,6 +231,12 @@ void atacarCartaInimiga(int jogador){
   }
   if ((jogador == 2 && tabuleiro.cartasJogador2[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
+  }
+  
+   if(jogador == 1){
+  	telaJogador1();  	
+  }else{
+  	telaJogador2();
   }
 }
 
@@ -293,6 +387,12 @@ void jogarUmaCarta(int jogador) {
 			std::cout << "Comando Invalido." << '\n';
 			break;
 	}
+	
+	 if(jogador == 1){
+  	telaJogador1();  	
+  }else{
+  	telaJogador2();
+  }
 }
 
 // Verifica se o jogador tem menos de 3 cartas na mao.
@@ -332,7 +432,7 @@ int getPosicaoVaziaNaMao(int jogador){
 
 // Adiciona uma carta aleatoria para a mao do jogador.
 void puxarUmaCarta(int jogador, CartaStr cartas[]){
-	int indiceAleatorio = rand() % 3;
+	int indiceAleatorio = rand() % 13;
 	if(jogador == (int) 1){
 		jogador1.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
 		std::cout << "O Jogador 1 puxou o(a) " << cartas[indiceAleatorio].nome << '\n';
@@ -356,76 +456,7 @@ void todasPodemAtacar(int jogador) {
   }
 }
 
-// Imprime o tabuleiro
-void imprimeTabuleiro(){
-  std::cout << "----------------Tabuleiro: Jogador 1----------" << '\n';
-  for (size_t i = 0; i < 3; i++) {
-    std::cout << "Carta " << i+1 << ": Nome: "<< tabuleiro.cartasJogador1[i] -> nome << " ";
-    std::cout << "Ataque: " << tabuleiro.cartasJogador1[i] -> ataque << " ";
-    std::cout << "Vida: " << tabuleiro.cartasJogador1[i] -> vida << " ";
-    std::cout << "Poder: " << tabuleiro.cartasJogador1[i] -> ataqueEspecial << '\n';
-    std::cout << "" << '\n';
-  }
-  std::cout << "----------------Tabuleiro: Jogador 2----------" << '\n';
-  for (size_t i = 0; i < 3; i++) {
-    std::cout << "Carta " << i+1 << ": Nome: " << tabuleiro.cartasJogador2[i] -> nome << " ";
-    std::cout << "Ataque: " << tabuleiro.cartasJogador2[i] -> ataque << " ";
-    std::cout << "Vida: " << tabuleiro.cartasJogador2[i] -> vida << " ";
-    std::cout << "Poder: " << tabuleiro.cartasJogador2[i] -> ataqueEspecial << '\n';
-    std::cout << "" << '\n';
-  }
-}
-//Imprime o topo
-void topo(){
-  // Tabuleiro para o jogador 1
-  std::cout << "-----------------------------------------" << '\n';
-  std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
-  std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
-}
 
-//view principal
-void vista(){
-  system("clear");
-  system("cls");
-  topo();
-  imprimeTabuleiro();
-
-}
-
-// Imprime a mao do jogador 1
-void maoJogador1(){
-  std::cout << "---------------Mao: Jogador 1---------------" << '\n';
-  for(size_t i = 0; i < 3; i++){
-      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador1.cartasMao[i] -> nome << " ";
-      std::cout << "Ataque " <<": "<< jogador1.cartasMao[i] -> ataque << " ";
-      std::cout << "Vida " << ": "<< jogador1.cartasMao[i] -> vida << " ";
-      std::cout << "Poder " <<  ": " << jogador1.cartasMao[i] -> ataqueEspecial << " ";
-      std::cout << "" << '\n';
-  }
-  std::cout << "-------------------------------------------" << '\n';
-}
-
-void maoJogador2(){
-  std::cout << "---------------Mao: Jogador 2---------------" << '\n';
-  for(size_t i = 0; i < 3; i++){
-      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador2.cartasMao[i] -> nome << " ";
-      std::cout << "Ataque " <<": "<< jogador2.cartasMao[i] -> ataque << " ";
-      std::cout << "Vida " << ": "<< jogador2.cartasMao[i] -> vida << " ";
-      std::cout << "Poder " << ": " << jogador2.cartasMao[i] -> ataqueEspecial << " ";
-      std::cout << "" << '\n';
-  }
-  std::cout << "-------------------------------------------" << '\n';
-}
-
-void telaJogador1(){
-  vista();
-  maoJogador1();
-}
-
-void telaJogador2(){
-  vista();
-  maoJogador2();
-}
 
 
 // ####### JOGO #######
@@ -591,7 +622,6 @@ int main() {
       	if((jogador1.jogarCartaBool) && !(campoDoJogadorEstaCheio(1))){
           jogarUmaCarta(1);
           jogador1.jogarCartaBool = false;
-          telaJogador1();
     		}else {
           std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
@@ -600,6 +630,7 @@ int main() {
         telaJogador1();
         if (!campoDoJogadorEstaVazio(1)) {
           atacarJogadorInimigo(1);
+          
         } else {
           std::cout << "O tabuleiro esta vazio." << '\n';
         }
@@ -608,6 +639,7 @@ int main() {
         telaJogador1();
         if (!(campoDoJogadorEstaVazio(1)) && !(campoDoJogadorEstaVazio(2))) {
           atacarCartaInimiga(1);
+          
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
@@ -639,7 +671,7 @@ int main() {
         if((jogador2.jogarCartaBool) && !(campoDoJogadorEstaCheio(2))){
           jogarUmaCarta(2);
           jogador2.jogarCartaBool = false;
-          telaJogador2();
+         
         }else {
           std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
@@ -648,6 +680,7 @@ int main() {
         telaJogador2();
         if (!campoDoJogadorEstaVazio(2)) {
           atacarJogadorInimigo(2);
+          
         } else {
           std::cout << "O campo esta vazio." << '\n';
         }
@@ -656,6 +689,7 @@ int main() {
         telaJogador2();
         if (!(campoDoJogadorEstaVazio(2)) && !(campoDoJogadorEstaVazio(1))) {
           atacarCartaInimiga(2);
+          
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
