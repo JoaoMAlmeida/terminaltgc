@@ -17,7 +17,8 @@ struct CartaStr {
   short ataque;
   string ataqueEspecial;
   bool atacarBool;
-}reiDaMontanha, loboCeleste, espectroNegro,fortex, ogroNegro,mercurioAlado,  cartaNula;
+}reiDaMontanha, loboCeleste, espectroNegro,fortex, ogroNegro,mercurioAlado,
+cortanaAAntipatica, ciriAEngracada, dellOFort, HPn01, Javas, CPlusivel, AntonelaASereia,  cartaNula;
 
 struct JogadorStr {
   string nome;
@@ -437,38 +438,86 @@ int main() {
   reiDaMontanha.ataque = 2;
   reiDaMontanha.ataqueEspecial = "Iniciativa"; //pode atacar no mesmo turno que foi colocada.
   reiDaMontanha.atacarBool = false;
+  
   loboCeleste.nome = "Lobo Celeste";
   loboCeleste.vida = 2;
   loboCeleste.ataque = 1;
   loboCeleste.ataqueEspecial = "Provocar"; //impede ataque direto ao jogador.
   loboCeleste.atacarBool = false;
+  
   espectroNegro.nome = "Espectro Negro";
   espectroNegro.vida = 1;
   espectroNegro.ataque = 1;
   espectroNegro.ataqueEspecial = "Ataque Duplo"; //ataca duas vezes.
   espectroNegro.atacarBool = false;
+  
   fortex.nome = "Fortex";
   fortex.vida = 5;
   fortex.ataque = 0;
-  fortex.ataqueEspecial = "Provocar"; //ataca duas vezes.
+  fortex.ataqueEspecial = "Provocar"; 
   fortex.atacarBool = false;
+  
   ogroNegro.nome = "Ogro Negro";
   ogroNegro.vida = 2;
   ogroNegro.ataque = 1;
-  ogroNegro.ataqueEspecial = "nenhum"; //ataca duas vezes.
+  ogroNegro.ataqueEspecial = "Nenhum"; 
   ogroNegro.atacarBool = false;
+  
   mercurioAlado.nome = "Mercurio Alado";
   mercurioAlado.vida = 2;
   mercurioAlado.ataque = 1;
-  mercurioAlado.ataqueEspecial = "Iniciativa"; //ataca duas vezes.
+  mercurioAlado.ataqueEspecial = "Iniciativa"; 
   mercurioAlado.atacarBool = false;
+  
+  cortanaAAntipatica.nome = "Cortana A Antipatica";
+  cortanaAAntipatica.vida = 4;
+  cortanaAAntipatica.ataque = 1;
+  cortanaAAntipatica.ataqueEspecial = "Provocar"; 
+  cortanaAAntipatica.atacarBool = false;
+  
+  ciriAEngracada.nome = "Ciri A Engracada";
+  ciriAEngracada.vida = 1;
+  ciriAEngracada.ataque = 3;
+  ciriAEngracada.ataqueEspecial = "iniciativa"; 
+  ciriAEngracada.atacarBool = false;
+  
+  dellOFort.nome = "Dell O Fort";
+  dellOFort.vida = 2;
+  dellOFort.ataque = 2;
+  dellOFort.ataqueEspecial = "Iniciativa"; 
+  dellOFort.atacarBool = false;
+  
+  HPn01.nome = "HP n01";
+  HPn01.vida = 3;
+  HPn01.ataque = 6;
+  HPn01.ataqueEspecial = "Nenhum"; 
+  HPn01.atacarBool = false;
+  
+  Javas.nome = "Javas";
+  Javas.vida = 1;
+  Javas.ataque = 1;
+  Javas.ataqueEspecial = "Iniciativa"; 
+  Javas.atacarBool = false;
+  
+  CPlusivel.nome = "CPlusivel";
+  CPlusivel.vida = 1;
+  CPlusivel.ataque = 7;
+  CPlusivel.ataqueEspecial = "Nenhum"; 
+  CPlusivel.atacarBool = false;
+  
+  AntonelaASereia.nome = "Antonela A Sereia";
+  AntonelaASereia.vida = 14;
+  AntonelaASereia.ataque = 0;
+  AntonelaASereia.ataqueEspecial = "Provocar"; 
+  AntonelaASereia.atacarBool = false;
+  
   cartaNula.nome = "";
   cartaNula.ataqueEspecial = "";
   cartaNula.ataque = 0;
   cartaNula.vida = 0;
   cartaNula.atacarBool = true; // somente para a cartaNula essa campo é true;
 
-  CartaStr cartas[6];
+  CartaStr cartas[13];
 
   cartas[0] = reiDaMontanha;
   cartas[1] = loboCeleste;
@@ -476,6 +525,13 @@ int main() {
   cartas[3] = mercurioAlado;
   cartas[4] = ogroNegro;
   cartas[5] = fortex;
+  cartas[6] = cortanaAAntipatica;
+  cartas[7] = ciriAEngracada;
+  cartas[8] = dellOFort;
+  cartas[9] = HPn01;
+  cartas[10] = Javas;
+  cartas[11] = CPlusivel;
+  cartas[12] = AntonelaASereia;
   
 
 
@@ -483,9 +539,9 @@ int main() {
 
   for(size_t i = 0; i < 3; i++){
 
-  	int indiceAleatorio = rand() % 6;
+  	int indiceAleatorio = rand() % 13;
   	jogador1.cartasMao[i] = &cartas[indiceAleatorio];
-  	indiceAleatorio = rand() % 6;
+  	indiceAleatorio = rand() % 13;
   	jogador2.cartasMao[i] = &cartas[indiceAleatorio];
 
   	tabuleiro.cartasJogador1[i] = &cartaNula;
