@@ -17,7 +17,7 @@ struct CartaStr {
   short ataque;
   string ataqueEspecial;
   bool atacarBool;
-}reiDaMontanha, loboCeleste, espectroNegro, cartaNula;
+}reiDaMontanha, loboCeleste, espectroNegro,fortex, ogroNegro,mercurioAlado,  cartaNula;
 
 struct JogadorStr {
   string nome;
@@ -431,10 +431,11 @@ void telaJogador2(){
 int main() {
 
   // Cartas:
+ 
   reiDaMontanha.nome = "Rei da Montanha";
   reiDaMontanha.vida = 3;
   reiDaMontanha.ataque = 2;
-  reiDaMontanha.ataqueEspecial = "Nenhum";
+  reiDaMontanha.ataqueEspecial = "Iniciativa"; //pode atacar no mesmo turno que foi colocada.
   reiDaMontanha.atacarBool = false;
   loboCeleste.nome = "Lobo Celeste";
   loboCeleste.vida = 2;
@@ -446,31 +447,50 @@ int main() {
   espectroNegro.ataque = 1;
   espectroNegro.ataqueEspecial = "Ataque Duplo"; //ataca duas vezes.
   espectroNegro.atacarBool = false;
+  fortex.nome = "Fortex";
+  fortex.vida = 5;
+  fortex.ataque = 0;
+  fortex.ataqueEspecial = "Provocar"; //ataca duas vezes.
+  fortex.atacarBool = false;
+  ogroNegro.nome = "Ogro Negro";
+  ogroNegro.vida = 2;
+  ogroNegro.ataque = 1;
+  ogroNegro.ataqueEspecial = "nenhum"; //ataca duas vezes.
+  ogroNegro.atacarBool = false;
+  mercurioAlado.nome = "Mercurio Alado";
+  mercurioAlado.vida = 2;
+  mercurioAlado.ataque = 1;
+  mercurioAlado.ataqueEspecial = "Iniciativa"; //ataca duas vezes.
+  mercurioAlado.atacarBool = false;
   cartaNula.nome = "";
   cartaNula.ataqueEspecial = "";
   cartaNula.ataque = 0;
   cartaNula.vida = 0;
   cartaNula.atacarBool = true; // somente para a cartaNula essa campo é true;
 
-  CartaStr cartas[3];
+  CartaStr cartas[6];
 
   cartas[0] = reiDaMontanha;
   cartas[1] = loboCeleste;
   cartas[2] = espectroNegro;
+  cartas[3] = mercurioAlado;
+  cartas[4] = ogroNegro;
+  cartas[5] = fortex;
+  
+
 
   srand ( time(NULL) ); //necessario para gerar numeros aleatorios em rand()
 
   for(size_t i = 0; i < 3; i++){
 
-  	int indiceAleatorio = rand() % 3;
+  	int indiceAleatorio = rand() % 6;
   	jogador1.cartasMao[i] = &cartas[indiceAleatorio];
-  	indiceAleatorio = rand() % 3;
+  	indiceAleatorio = rand() % 6;
   	jogador2.cartasMao[i] = &cartas[indiceAleatorio];
 
   	tabuleiro.cartasJogador1[i] = &cartaNula;
   	tabuleiro.cartasJogador2[i] = &cartaNula;
   }
-
   // Jogadores:
   jogador1.nome = "Jogador 1";
   jogador1.vida = 10;
@@ -605,3 +625,4 @@ int main() {
 
   return 0;
 }
+
