@@ -52,7 +52,7 @@ bool verificaProvocar(int jogador) {
 }
 
 // Usa carta para atacar o jogador adversario.
-void atacarJogadorInimigo(struct TabuleiroStr& tabuleiro, int jogador){
+void atacarJogadorInimigo(int jogador){
   int cartaOpt;
   std::cout << "Escolha uma carta sua para atacar (1, 2 ou 3)" << '\n';
   cin >> cartaOpt;
@@ -89,16 +89,16 @@ void atacarJogadorInimigo(struct TabuleiroStr& tabuleiro, int jogador){
     std::cout << "A carta " << tabuleiro.cartasJogador2[cartaOpt-1] -> nome << " atacou o jogador 1" << '\n';
   }
 
-  if (jogador == 1 && tabuleiro.cartasJogador1[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0 || cartaOpt < 0 || cartaOpt > 3) {
+  if ((jogador == 1 && tabuleiro.cartasJogador1[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
-  if (jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0 || cartaOpt < 0 || cartaOpt > 3) {
+  if ((jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
 }
 
 // Usa uma carta do jogador para atacar uma carta adversaria.
-void atacarCartaInimiga(struct TabuleiroStr& tabuleiro, int jogador){
+void atacarCartaInimiga(int jogador){
   int cartaOpt;
   int cartaIni;
   std::cout << "Escolha uma carta sua para atacar (1, 2 ou 3)" << '\n';
@@ -137,10 +137,10 @@ void atacarCartaInimiga(struct TabuleiroStr& tabuleiro, int jogador){
     }
   }
 
-  if (jogador == 1 && tabuleiro.cartasJogador1[cartaIni-1] -> nome.compare(cartaNula.nome) == 0 || cartaOpt < 0 || cartaOpt > 3) {
+  if ((jogador == 1 && tabuleiro.cartasJogador1[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
-  if (jogador == 2 && tabuleiro.cartasJogador2[cartaIni-1] -> nome.compare(cartaNula.nome) == 0 || cartaOpt < 0 || cartaOpt > 3) {
+  if ((jogador == 2 && tabuleiro.cartasJogador2[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     std::cout << "Carta nao existe." << '\n';
   }
 }
@@ -214,7 +214,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador1[0] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador1[0] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador1.cartasMao[0] -> nome << '\n';
+					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[0] -> nome << '\n';
 					jogador1.cartasMao[0] = &cartaNula;
 				} else {
 					std::cout << "Tabuleiro Cheio." << '\n';
@@ -226,7 +226,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador2[0] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador2[0] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador2.cartasMao[0] -> nome << '\n';
+					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[0] -> nome << '\n';
 					jogador2.cartasMao[0] = &cartaNula;
 				} else {
 					std::cout << "Tabuleiro Cheio." << '\n';
@@ -241,7 +241,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador1[1] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador1[1] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador1.cartasMao[1] -> nome << '\n';
+					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[1] -> nome << '\n';
 					jogador1.cartasMao[1] = &cartaNula;
 
 				} else {
@@ -254,7 +254,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador2[1] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador2[1] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador2.cartasMao[1] -> nome << '\n';
+					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[1] -> nome << '\n';
 					jogador2.cartasMao[1] = &cartaNula;
 				} else {
 					std::cout << "Tabuleiro Cheio." << '\n';
@@ -269,7 +269,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador1[2] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador1[2] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador1.cartasMao[2] -> nome << '\n';
+					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[2] -> nome << '\n';
 					jogador1.cartasMao[2] = &cartaNula;
 				} else {
 					std::cout << "Tabuleiro Cheio." << '\n';
@@ -281,7 +281,7 @@ void jogarUmaCarta(int jogador) {
           if (tabuleiro.cartasJogador2[2] -> ataqueEspecial.compare("Iniciativa") == 0) {
             tabuleiro.cartasJogador2[2] -> atacarBool = true;
           }
-					std::cout << "Voce invocou o " << jogador2.cartasMao[2] -> nome << '\n';
+					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[2] -> nome << '\n';
 					jogador2.cartasMao[2] = &cartaNula;
 				} else {
 					std::cout << "Tabuleiro Cheio." << '\n';
@@ -334,16 +334,17 @@ void puxarUmaCarta(int jogador, CartaStr cartas[]){
 	int indiceAleatorio = rand() % 3;
 	if(jogador == (int) 1){
 		jogador1.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
+		std::cout << "O Jogador 1 puxou o(a) " << cartas[indiceAleatorio].nome << '\n';
 
 	} else if(jogador == (int) 2){
 		jogador2.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
+		std::cout << "O Jogador 2 puxou o(a) " << cartas[indiceAleatorio].nome << '\n';
 	}
 
-	std::cout << "Voce puxou " << cartas[indiceAleatorio].nome << '\n';
 }
 
 // Permite todas as cartas no tabuleiro atacarem.
-void todasPodemAtacar(int jogador, TabuleiroStr& tabuleiro) {
+void todasPodemAtacar(int jogador) {
   for (size_t i = 0; i < 3; i++) {
     if (jogador == 1 && tabuleiro.cartasJogador1[i] -> nome.compare(cartaNula.nome) != 0) {
       tabuleiro.cartasJogador1[i] -> atacarBool = true;
@@ -460,7 +461,7 @@ int main() {
       getline(cin, escolha);
       if (escolha == "FT") {
         jogador1.jogarCartaBool = true;
-        todasPodemAtacar(1, tabuleiro);
+        todasPodemAtacar(1);
         jogador1.turno = false;
         jogador2.turno = true;
       }
@@ -474,14 +475,14 @@ int main() {
 	    }
       if (escolha == "AJ") {
         if (!campoDoJogadorEstaVazio(1)) {
-          atacarJogadorInimigo(tabuleiro, 1);
+          atacarJogadorInimigo(1);
         } else {
           std::cout << "O tabuleiro esta vazio." << '\n';
         }
       }
       if (escolha == "AC") {
         if (!(campoDoJogadorEstaVazio(1)) && !(campoDoJogadorEstaVazio(2))) {
-          atacarCartaInimiga(tabuleiro, 1);
+          atacarCartaInimiga(1);
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
@@ -533,7 +534,7 @@ int main() {
       getline(cin, escolha);
       if (escolha == "FT") {
         jogador2.jogarCartaBool = true;
-        todasPodemAtacar(2, tabuleiro);
+        todasPodemAtacar(2);
         jogador1.turno = true;
         jogador2.turno = false;
       }
@@ -547,14 +548,14 @@ int main() {
   	  }
       if (escolha == "AJ") {
         if (!campoDoJogadorEstaVazio(2)) {
-          atacarJogadorInimigo(tabuleiro, 2);
+          atacarJogadorInimigo(2);
         } else {
-          std::cout << "O campo esta vazio." << '\n';
+          std::cout << "O tabuleiro esta vazio." << '\n';
         }
       }
       if (escolha == "AC") {
         if (!(campoDoJogadorEstaVazio(2)) && !(campoDoJogadorEstaVazio(1))) {
-          atacarCartaInimiga(tabuleiro, 2);
+          atacarCartaInimiga(2);
         } else {
           std::cout << "Algum tabuleiro esta vazio." << '\n';
         }
