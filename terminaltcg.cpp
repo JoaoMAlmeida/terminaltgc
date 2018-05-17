@@ -355,7 +355,76 @@ void todasPodemAtacar(int jogador) {
   }
 }
 
+// Imprime o tabuleiro
+void imprimeTabuleiro(){
+  std::cout << "----------------Tabuleiro: Jogador 1----------" << '\n';
+  for (size_t i = 0; i < 3; i++) {
+    std::cout << "Carta " << i+1 << ": Nome: "<< tabuleiro.cartasJogador1[i] -> nome << " ";
+    std::cout << "Ataque: " << tabuleiro.cartasJogador1[i] -> ataque << " ";
+    std::cout << "Vida: " << tabuleiro.cartasJogador1[i] -> vida << " ";
+    std::cout << "Poder: " << tabuleiro.cartasJogador1[i] -> ataqueEspecial << '\n';
+    std::cout << "" << '\n';
+  }
+  std::cout << "----------------Tabuleiro: Jogador 2----------" << '\n';
+  for (size_t i = 0; i < 3; i++) {
+    std::cout << "Carta " << i+1 << ": Nome: " << tabuleiro.cartasJogador2[i] -> nome << " ";
+    std::cout << "Ataque: " << tabuleiro.cartasJogador2[i] -> ataque << " ";
+    std::cout << "Vida: " << tabuleiro.cartasJogador2[i] -> vida << " ";
+    std::cout << "Poder: " << tabuleiro.cartasJogador2[i] -> ataqueEspecial << '\n';
+    std::cout << "" << '\n';
+  }
+}
+//Imprime o topo
+void topo(){
+  // Tabuleiro para o jogador 1
+  std::cout << "-----------------------------------------" << '\n';
+  std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
+  std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
+}
 
+//view principal
+void vista(){
+  system("clear");
+  system("cls");
+  topo();
+  imprimeTabuleiro();
+
+}
+
+// Imprime a mao do jogador 1
+void maoJogador1(){
+  std::cout << "---------------Mao: Jogador 1---------------" << '\n';
+  for(size_t i = 0; i < 3; i++){
+      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador1.cartasMao[i] -> nome << " ";
+      std::cout << "Ataque " <<": "<< jogador1.cartasMao[i] -> ataque << " ";
+      std::cout << "Vida " << ": "<< jogador1.cartasMao[i] -> vida << " ";
+      std::cout << "Poder " <<  ": " << jogador1.cartasMao[i] -> ataqueEspecial << " ";
+      std::cout << "" << '\n';
+  }
+  std::cout << "-------------------------------------------" << '\n';
+}
+
+void maoJogador2(){
+  std::cout << "---------------Mao: Jogador 2---------------" << '\n';
+  for(size_t i = 0; i < 3; i++){
+      std::cout << "Carta " << i+1 << ": " << "Nome: "<< jogador2.cartasMao[i] -> nome << " ";
+      std::cout << "Ataque " <<": "<< jogador2.cartasMao[i] -> ataque << " ";
+      std::cout << "Vida " << ": "<< jogador2.cartasMao[i] -> vida << " ";
+      std::cout << "Poder " << ": " << jogador2.cartasMao[i] -> ataqueEspecial << " ";
+      std::cout << "" << '\n';
+  }
+  std::cout << "-------------------------------------------" << '\n';
+}
+
+void telaJogador1(){
+  vista();
+  maoJogador1();
+}
+
+void telaJogador2(){
+  vista();
+  maoJogador2();
+}
 
 
 // ####### JOGO #######
@@ -365,7 +434,7 @@ int main() {
   reiDaMontanha.nome = "Rei da Montanha";
   reiDaMontanha.vida = 3;
   reiDaMontanha.ataque = 2;
-  reiDaMontanha.ataqueEspecial = "Iniciativa"; //pode atacar no mesmo turno que foi colocada.
+  reiDaMontanha.ataqueEspecial = "Nenhum";
   reiDaMontanha.atacarBool = false;
   loboCeleste.nome = "Lobo Celeste";
   loboCeleste.vida = 2;
@@ -426,61 +495,41 @@ int main() {
     		puxarUmaCarta(1, cartas);
     }
 
-    // Tabuleiro para o jogador 1
-    std::cout << "-----------------------------------------" << '\n';
-    std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
-    std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
-    std::cout << "---------------Mao: Jogador 1---------------" << '\n';
-    for(size_t i = 0; i < 3; i++){
-        std::cout << "Carta " << i+1 << ": " << "NOME: "<< jogador1.cartasMao[i] -> nome << " ";
-        std::cout << "ATAQUE " <<": "<< jogador1.cartasMao[i] -> ataque << " ";
-        std::cout << "VIDA " << ": "<< jogador1.cartasMao[i] -> vida << " ";
-        std::cout << "PODER " <<  ": " << jogador1.cartasMao[i] -> ataqueEspecial << " ";
-        std::cout << "" << '\n';
-    }
-    std::cout << "-------------------------------------------Tabuleiro: Jogador 1---------------------------------------" << '\n';
-    for (size_t i = 0; i < 3; i++) {
-      std::cout << "CARTA " << i+1 << ": NOME: "<< tabuleiro.cartasJogador1[i] -> nome << " ";
-      std::cout << "ATAQUE: " << tabuleiro.cartasJogador1[i] -> ataque << " ";
-      std::cout << "VIDA: " << tabuleiro.cartasJogador1[i] -> vida << " ";
-      std::cout << "PODER: " << tabuleiro.cartasJogador1[i] -> ataqueEspecial << '\n';
-      std::cout << "" << '\n';
-    }
-    std::cout << "-------------------------------------------Tabuleiro: Jogador 2---------------------------------------" << '\n';
-    for (size_t i = 0; i < 3; i++) {
-      std::cout << "CARTA " << i+1 << ": NOME: " << tabuleiro.cartasJogador2[i] -> nome << " ";
-      std::cout << "ATAQUE: " << tabuleiro.cartasJogador2[i] -> ataque << " ";
-      std::cout << "VIDA: " << tabuleiro.cartasJogador2[i] -> vida << " ";
-      std::cout << "PODER: " << tabuleiro.cartasJogador2[i] -> ataqueEspecial << '\n';
-      std::cout << "" << '\n';
-    }
+    // imprime tela do jogador1
+    telaJogador1();
     while (jogador1.turno && jogador1.vida > 0) {
       string escolha;
       std::cout << "Turno: Jogador 1:" << '\n';
       std::cout << "JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno" << '\n';
       getline(cin, escolha);
-      if (escolha == "FT") {
+
+      //fializar turno
+      if (escolha == "FT" || escolha == "ft") {
         jogador1.jogarCartaBool = true;
         todasPodemAtacar(1);
         jogador1.turno = false;
         jogador2.turno = true;
       }
-      if(escolha == "JC") {
+
+      if(escolha == "JC" || escolha == "jc") {
       	if((jogador1.jogarCartaBool) && !(campoDoJogadorEstaCheio(1))){
           jogarUmaCarta(1);
           jogador1.jogarCartaBool = false;
+          telaJogador1();
     		}else {
           std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
 	    }
-      if (escolha == "AJ") {
+      if (escolha == "AJ" || escolha == "aj") {
+        telaJogador1();
         if (!campoDoJogadorEstaVazio(1)) {
           atacarJogadorInimigo(1);
         } else {
           std::cout << "O tabuleiro esta vazio." << '\n';
         }
       }
-      if (escolha == "AC") {
+      if (escolha == "AC" || escolha == "ac") {
+        telaJogador1();
         if (!(campoDoJogadorEstaVazio(1)) && !(campoDoJogadorEstaVazio(2))) {
           atacarCartaInimiga(1);
         } else {
@@ -498,62 +547,37 @@ int main() {
     		puxarUmaCarta(2, cartas);
     }
 
-    // Tabuleiro para o jogador 2
-    std::cout << "-----------------------------------------" << '\n';
-    std::cout << "Vida Jogador 1= " << jogador1.vida << " | ";
-    std::cout << "Vida Jogador 2= " << jogador2.vida << " |" << '\n';
-    std::cout << "---------------Mao: Jogador 2---------------" << '\n';
-    for(size_t i = 0; i < 3; i++){
-        std::cout << "Carta " << i+1 << ": " << "NOME: "<< jogador2.cartasMao[i] -> nome << " ";
-        std::cout << "ATAQUE " <<": "<< jogador2.cartasMao[i] -> ataque << " ";
-        std::cout << "VIDA " << ": "<< jogador2.cartasMao[i] -> vida << " ";
-        std::cout << "PODER " << ": " << jogador2.cartasMao[i] -> ataqueEspecial << " ";
-        std::cout << "" << '\n';
-    }
-    std::cout << "-------------------------------------------Tabuleiro: Jogador 1---------------------------------------" << '\n';
-    for (size_t i = 0; i < 3; i++) {
-      std::cout << "CARTA " << i+1 << ": NOME: "<< tabuleiro.cartasJogador1[i] -> nome << " ";
-      std::cout << "ATAQUE: " << tabuleiro.cartasJogador1[i] -> ataque << " ";
-      std::cout << "VIDA: " << tabuleiro.cartasJogador1[i] -> vida << " ";
-      std::cout << "PODER: " << tabuleiro.cartasJogador1[i] -> ataqueEspecial << '\n';
-      std::cout << "" << '\n';
-    }
-    std::cout << "-------------------------------------------Tabuleiro: Jogador 2---------------------------------------" << '\n';
-    for (size_t i = 0; i < 3; i++) {
-      std::cout << "CARTA " << i+1 << ": NOME: " << tabuleiro.cartasJogador2[i] -> nome << " ";
-      std::cout << "ATAQUE: " << tabuleiro.cartasJogador2[i] -> ataque << " ";
-      std::cout << "VIDA: " << tabuleiro.cartasJogador2[i] -> vida << " ";
-      std::cout << "PODER: " << tabuleiro.cartasJogador2[i] -> ataqueEspecial << '\n';
-      std::cout << "" << '\n';
-    }
-
+    telaJogador2();
     while (jogador2.turno && jogador2.vida > 0) {
       string escolha;
       std::cout << "Turno: Jogador 2:" << '\n';
       std::cout << "JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno" << '\n';
       getline(cin, escolha);
-      if (escolha == "FT") {
+      if (escolha == "FT" || escolha == "ft") {
         jogador2.jogarCartaBool = true;
         todasPodemAtacar(2);
         jogador1.turno = true;
         jogador2.turno = false;
       }
-      if(escolha == "JC") {
+      if(escolha == "JC" || escolha == "jc") {
         if((jogador2.jogarCartaBool) && !(campoDoJogadorEstaCheio(2))){
           jogarUmaCarta(2);
           jogador2.jogarCartaBool = false;
+          telaJogador2();
         }else {
           std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
   	  }
-      if (escolha == "AJ") {
+      if (escolha == "AJ" || escolha == "aj") {
+        telaJogador2();
         if (!campoDoJogadorEstaVazio(2)) {
           atacarJogadorInimigo(2);
         } else {
-          std::cout << "O tabuleiro esta vazio." << '\n';
+          std::cout << "O campo esta vazio." << '\n';
         }
       }
-      if (escolha == "AC") {
+      if (escolha == "AC" || escolha == "ac") {
+        telaJogador2();
         if (!(campoDoJogadorEstaVazio(2)) && !(campoDoJogadorEstaVazio(1))) {
           atacarCartaInimiga(2);
         } else {
