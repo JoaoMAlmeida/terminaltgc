@@ -147,20 +147,16 @@ void atacarJogadorInimigo(int jogador){
 
   if (jogador == 1 && verificaProvocar(2)) {
     telaJogador1("Alguma carta inimiga impediu seu ataque.");
-    //std::cout <<  << '\n';
   }
   if (jogador == 2 && verificaProvocar(1)) {
     telaJogador2("Alguma carta inimiga impediu seu ataque.");
-    //std::cout << "Alguma carta inimiga impediu seu ataque." << '\n';
   }
 
   if (jogador == 1 && !(tabuleiro.cartasJogador1[cartaOpt-1] -> atacarBool)) {
     telaJogador1("Voce nao pode atacar com essa carta agora.");
-    //std::cout <<  << '\n';
   }
   if (jogador == 2 && !(tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool)) {
     telaJogador2("Voce nao pode atacar com essa carta agora.");
-    //std::cout << "Voce nao pode atacar com essa carta agora." << '\n';
   }
 
   if (jogador == 1 && tabuleiro.cartasJogador1[cartaOpt-1] -> nome.compare(cartaNula.nome) != 0 &&
@@ -171,7 +167,6 @@ void atacarJogadorInimigo(int jogador){
     }
     tabuleiro.cartasJogador1[cartaOpt-1] -> atacarBool = false;
     telaJogador1("A carta " + (tabuleiro.cartasJogador1[cartaOpt-1] -> nome) + " atacou o jogador 2");
-    //std::cout << "A carta " << tabuleiro.cartasJogador1[cartaOpt-1] -> nome << " atacou o jogador 2" << '\n';
   } else if (jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) != 0 &&
               tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool && !verificaProvocar(1)) {
     jogador1.vida -= tabuleiro.cartasJogador2[cartaOpt-1] -> ataque;
@@ -180,16 +175,13 @@ void atacarJogadorInimigo(int jogador){
     }
     tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool = false;
     telaJogador2("A carta " + (tabuleiro.cartasJogador2[cartaOpt-1] -> nome) + " atacou o jogador 1");
-    //std::cout << "A carta " << tabuleiro.cartasJogador2[cartaOpt-1] -> nome << " atacou o jogador 1" << '\n';
   }
 
   if ((jogador == 1 && tabuleiro.cartasJogador1[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     telaJogador1("Carta nao existe.");
-    //std::cout <<  << '\n';
   }
   if ((jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     telaJogador2("Carta nao existe.");
-    //std::cout <<  << '\n';
   }
 }
 
@@ -204,11 +196,9 @@ void atacarCartaInimiga(int jogador){
 
   if (jogador == 1 && !(tabuleiro.cartasJogador1[cartaOpt-1] -> atacarBool)) {
     telaJogador1("Voce nao pode atacar com essa carta agora.");
-    //std::cout << "Voce nao pode atacar com essa carta agora." << '\n';
   }
   if (jogador == 2 && !(tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool)) {
     telaJogador2("Voce nao pode atacar com essa carta agora.");
-    //std::cout << "Voce nao pode atacar com essa carta agora." << '\n';
   }
 
   if (jogador == 1 && tabuleiro.cartasJogador1[cartaOpt-1] -> nome.compare(cartaNula.nome) != 0 &&
@@ -219,7 +209,6 @@ void atacarCartaInimiga(int jogador){
       tabuleiro.cartasJogador2[cartaIni-1] -> vida -= tabuleiro.cartasJogador1[cartaOpt-1] -> ataque;
     }
     telaJogador1("A carta " + (tabuleiro.cartasJogador1[cartaOpt-1] -> nome) + " atacou a carta " + (tabuleiro.cartasJogador2[cartaIni-1] -> nome) );
-    //std::cout << "A carta " << tabuleiro.cartasJogador1[cartaOpt-1] -> nome << " atacou a carta " << tabuleiro.cartasJogador2[cartaIni-1] -> nome << '\n';
     if (tabuleiro.cartasJogador2[cartaIni-1] -> vida <= 0) {
       tabuleiro.cartasJogador2[cartaIni-1] = &cartaNula;
     }
@@ -231,7 +220,6 @@ void atacarCartaInimiga(int jogador){
     }
     tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool = false;
     telaJogador2("A carta " + (tabuleiro.cartasJogador2[cartaOpt-1] -> nome) + " atacou a carta " + (tabuleiro.cartasJogador1[cartaIni-1] -> nome) );
-    //std::cout << "A carta " << tabuleiro.cartasJogador2[cartaOpt-1] -> nome << " atacou a carta " << tabuleiro.cartasJogador1[cartaIni-1] -> nome << '\n';
     if (tabuleiro.cartasJogador1[cartaIni-1] -> vida <= 0) {
       tabuleiro.cartasJogador1[cartaIni-1] = &cartaNula;
     }
@@ -239,11 +227,9 @@ void atacarCartaInimiga(int jogador){
 
   if ((jogador == 1 && tabuleiro.cartasJogador1[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     telaJogador1("Carta nao existe.");
-    //std::cout << "Carta nao existe." << '\n';
   }
   if ((jogador == 2 && tabuleiro.cartasJogador2[cartaIni-1] -> nome.compare(cartaNula.nome) == 0) || (cartaOpt < 0 || cartaOpt > 3)) {
     telaJogador2("Carta nao existe.");
-    //std::cout << "Carta nao existe." << '\n';
   }
 
 }
@@ -481,7 +467,7 @@ int main() {
   loboCeleste.nome = "Lobo Celeste";
   loboCeleste.vida = 2;
   loboCeleste.ataque = 1;
-  loboCeleste.ataqueEspecial = "Provocar"; //impede ataque direto ao jogador.
+  loboCeleste.ataqueEspecial = "Nenhum";
   loboCeleste.atacarBool = false;
 
   espectroNegro.nome = "Espectro Negro";
@@ -499,7 +485,7 @@ int main() {
   ogroNegro.nome = "Ogro Negro";
   ogroNegro.vida = 2;
   ogroNegro.ataque = 1;
-  ogroNegro.ataqueEspecial = "Nenhum";
+  ogroNegro.ataqueEspecial = "Ataque Duplo";
   ogroNegro.atacarBool = false;
 
   mercurioAlado.nome = "Mercurio Alado";
@@ -511,19 +497,19 @@ int main() {
   cortanaAAntipatica.nome = "Cortana A Antipatica";
   cortanaAAntipatica.vida = 4;
   cortanaAAntipatica.ataque = 1;
-  cortanaAAntipatica.ataqueEspecial = "Provocar";
+  cortanaAAntipatica.ataqueEspecial = "Provocar"; //impede ataque direto ao jogador.
   cortanaAAntipatica.atacarBool = false;
 
   ciriAEngracada.nome = "Ciri A Engracada";
   ciriAEngracada.vida = 1;
   ciriAEngracada.ataque = 3;
-  ciriAEngracada.ataqueEspecial = "iniciativa";
+  ciriAEngracada.ataqueEspecial = "Nenhum";
   ciriAEngracada.atacarBool = false;
 
   dellOFort.nome = "Dell O Fort";
   dellOFort.vida = 2;
   dellOFort.ataque = 2;
-  dellOFort.ataqueEspecial = "Iniciativa";
+  dellOFort.ataqueEspecial = "Nenhum";
   dellOFort.atacarBool = false;
 
   HPn01.nome = "HP n01";
@@ -535,7 +521,7 @@ int main() {
   Javas.nome = "Javas";
   Javas.vida = 1;
   Javas.ataque = 1;
-  Javas.ataqueEspecial = "Iniciativa";
+  Javas.ataqueEspecial = "Nenhum";
   Javas.atacarBool = false;
 
   CPlusivel.nome = "CPlusivel";
@@ -545,39 +531,39 @@ int main() {
   CPlusivel.atacarBool = false;
 
   AntonelaASereia.nome = "Antonela A Sereia";
-  AntonelaASereia.vida = 14;
-  AntonelaASereia.ataque = 0;
-  AntonelaASereia.ataqueEspecial = "Provocar";
+  AntonelaASereia.vida = 5;
+  AntonelaASereia.ataque = 3;
+  AntonelaASereia.ataqueEspecial = "Nenhum";
   AntonelaASereia.atacarBool = false;
 
   NokiaTijolao.nome = "NokiaTi jolao";
-  NokiaTijolao.vida = 20;
-  NokiaTijolao.ataque = 1;
+  NokiaTijolao.vida = 15;
+  NokiaTijolao.ataque = 0;
   NokiaTijolao.ataqueEspecial = "Provocar";
   NokiaTijolao.atacarBool = false;
 
   ZeDaPeixeira.nome = "Ze Da Peixeira";
   ZeDaPeixeira.vida = 2;
   ZeDaPeixeira.ataque = 6;
-  ZeDaPeixeira.ataqueEspecial = "iniciativa";
+  ZeDaPeixeira.ataqueEspecial = "Nenhum";
   ZeDaPeixeira.atacarBool = false;
 
   MosntroDonATAL.nome = "MosntroDonATAL";
   MosntroDonATAL.vida = 2;
   MosntroDonATAL.ataque = 2;
-  MosntroDonATAL.ataqueEspecial = "Nenhum";
+  MosntroDonATAL.ataqueEspecial = "Ataque Duplo";
   MosntroDonATAL.atacarBool = false;
 
   ogroAlbino.nome = "ogro Albino";
   ogroAlbino.vida = 2;
   ogroAlbino.ataque = 2;
-  ogroAlbino.ataqueEspecial = "Nenhum";
+  ogroAlbino.ataqueEspecial = "Ataque Duplo";
   ogroAlbino.atacarBool = false;
 
   deadLine.nome = "Dead a Line";
   deadLine.vida = 2;
   deadLine.ataque = 6;
-  deadLine.ataqueEspecial = "iniciativa";
+  deadLine.ataqueEspecial = "Nenhum";
   deadLine.atacarBool = false;
 
   cartaNula.nome = "";
@@ -607,7 +593,6 @@ int main() {
   cartas[16] = ogroAlbino;
   cartas[17] = deadLine;
 
-  //NokiaTijolao,ZeDaPeixeira,MosntroDonATAL,ogroAlbino,deadLine
 
   srand ( time(NULL) ); //necessario para gerar numeros aleatorios em rand()
 
@@ -666,7 +651,6 @@ int main() {
           telaJogador1("Jogada realizada com sucesso");
     		}else {
           telaJogador1("Voce nao pode jogar numa nova carta.");
-          //std::cout << "Voce nao pode jogar numa nova carta." << '\n';
         }
 	    }
       if (escolha == "AJ" || escolha == "aj") {
@@ -674,8 +658,7 @@ int main() {
           telaJogador1("Jogada realizada com sucesso");
           atacarJogadorInimigo(1);
         } else {
-          //telaJogador1("O tabuleiro esta vazio.");
-          //std::cout <<  << '\n';
+          telaJogador1("O tabuleiro esta vazio.");
         }
       }
       if (escolha == "AC" || escolha == "ac") {
@@ -684,7 +667,6 @@ int main() {
           atacarCartaInimiga(1);
         } else {
           telaJogador1("Algum tabuleiro esta vazio.");
-          //std::cout <<  << '\n';
         }
       }
 
@@ -715,7 +697,6 @@ int main() {
           telaJogador2("Jogada realizada com sucesso");
         }else {
           telaJogador2("Voce nao pode jogar numa nova carta.");
-          //std::cout <<  << '\n';
         }
   	  }
       if (escolha == "AJ" || escolha == "aj") {
@@ -723,8 +704,7 @@ int main() {
           telaJogador2("Jogada realizada com sucesso");
           atacarJogadorInimigo(2);
         } else {
-        //  telaJogador2("O campo esta vazio.");
-          //std::cout <<  << '\n';
+          telaJogador2("O campo esta vazio.");
         }
       }
       if (escolha == "AC" || escolha == "ac") {
@@ -732,8 +712,7 @@ int main() {
           telaJogador2("Jogada realizada com sucesso");
           atacarCartaInimiga(2);
         } else {
-        //  telaJogador2("Algum tabuleiro esta vazio.");
-          //std::cout <<  << '\n';
+          telaJogador2("Algum tabuleiro esta vazio.");
         }
       }
 
