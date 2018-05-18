@@ -426,7 +426,7 @@ int getPosicaoVaziaNaMao(int jogador){
 
 // Adiciona uma carta aleatoria para a mao do jogador.
 void puxarUmaCarta(int jogador, CartaStr cartas[]){
-	int indiceAleatorio = rand() % 13;
+	int indiceAleatorio = rand() % 18;
 	if(jogador == (int) 1){
 		jogador1.cartasMao[getPosicaoVaziaNaMao(jogador)] = &cartas[indiceAleatorio];
 		std::cout << "O Jogador 1 puxou o(a) " << cartas[indiceAleatorio].nome << '\n';
