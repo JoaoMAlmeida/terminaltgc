@@ -165,6 +165,9 @@ void atacarJogadorInimigo(int jogador){
     if (tabuleiro.cartasJogador1[cartaOpt-1] -> ataqueEspecial.compare("Ataque Duplo") == 0) {
       jogador2.vida -= tabuleiro.cartasJogador1[cartaOpt-1] -> ataque;
     }
+    if (jogador2.vida < 0) {
+      jogador2.vida = 0;
+    }
     tabuleiro.cartasJogador1[cartaOpt-1] -> atacarBool = false;
     telaJogador1("A carta " + (tabuleiro.cartasJogador1[cartaOpt-1] -> nome) + " atacou o jogador 2");
   } else if (jogador == 2 && tabuleiro.cartasJogador2[cartaOpt-1] -> nome.compare(cartaNula.nome) != 0 &&
@@ -172,6 +175,9 @@ void atacarJogadorInimigo(int jogador){
     jogador1.vida -= tabuleiro.cartasJogador2[cartaOpt-1] -> ataque;
     if (tabuleiro.cartasJogador2[cartaOpt-1] -> ataqueEspecial.compare("Ataque Duplo") == 0) {
       jogador1.vida -= tabuleiro.cartasJogador2[cartaOpt-1] -> ataque;
+    }
+    if (jogador1.vida < 0) {
+      jogador1.vida = 0;
     }
     tabuleiro.cartasJogador2[cartaOpt-1] -> atacarBool = false;
     telaJogador2("A carta " + (tabuleiro.cartasJogador2[cartaOpt-1] -> nome) + " atacou o jogador 1");
