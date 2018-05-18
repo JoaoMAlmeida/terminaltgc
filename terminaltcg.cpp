@@ -298,11 +298,13 @@ void jogarUmaCarta(int jogador) {
 		case 1: //Jogar a carta da primeira posicao
 			if(jogador == (int) 1){
 				if((jogador1.cartasMao[0] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao zero nao � a carta nula
-					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[0];
-          tabuleiro.cartasJogador1[0] -> atacarBool = false;
-          if (tabuleiro.cartasJogador1[0] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador1[0] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador1[posicaoVazia] = jogador1.cartasMao[0];
+					tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador1[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = true;
+					}
 					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[0] -> nome << '\n';
 					jogador1.cartasMao[0] = &cartaNula;
 				} else {
@@ -310,11 +312,14 @@ void jogarUmaCarta(int jogador) {
 				}
 			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[0] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao zero nao � a carta nula
-					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[0];
-          tabuleiro.cartasJogador2[0] -> atacarBool = false;
-          if (tabuleiro.cartasJogador2[0] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador2[0] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador2[posicaoVazia] = jogador2.cartasMao[0];
+					tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador2[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = true;
+					}
+
 					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[0] -> nome << '\n';
 					jogador2.cartasMao[0] = &cartaNula;
 				} else {
@@ -325,11 +330,14 @@ void jogarUmaCarta(int jogador) {
 		case 2: //Jogar a carta da segunda posicao
 			if(jogador == (int) 1){
 				if((jogador1.cartasMao[1] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao um nao � a carta nula
-					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[1];
-          tabuleiro.cartasJogador1[1] -> atacarBool = false;
-          if (tabuleiro.cartasJogador1[1] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador1[1] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador1[posicaoVazia] = jogador1.cartasMao[1];
+					tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador1[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = true;
+					}
+
 					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[1] -> nome << '\n';
 					jogador1.cartasMao[1] = &cartaNula;
 
@@ -338,11 +346,14 @@ void jogarUmaCarta(int jogador) {
 				}
 			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[1] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao um nao � a carta nula
-					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[1];
-          tabuleiro.cartasJogador2[1] -> atacarBool = false;
-          if (tabuleiro.cartasJogador2[1] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador2[1] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador2[posicaoVazia] = jogador2.cartasMao[1];
+					tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador2[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = true;
+					}
+
 					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[1] -> nome << '\n';
 					jogador2.cartasMao[1] = &cartaNula;
 				} else {
@@ -353,11 +364,14 @@ void jogarUmaCarta(int jogador) {
 		case 3: //Jogar a carta da terceira posicao
 			if(jogador == (int) 1){
 				if((jogador1.cartasMao[2] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao dois nao � a carta nula
-					tabuleiro.cartasJogador1[getPosicaoVaziaNoCampo(jogador)] = jogador1.cartasMao[2];
-          tabuleiro.cartasJogador1[2] -> atacarBool = false;
-          if (tabuleiro.cartasJogador1[2] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador1[2] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador1[posicaoVazia] = jogador1.cartasMao[2];
+					tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador1[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador1[posicaoVazia] -> atacarBool = true;
+					}
+
 					std::cout << "O Jogador 1 invocou o(a) " << jogador1.cartasMao[2] -> nome << '\n';
 					jogador1.cartasMao[2] = &cartaNula;
 				} else {
@@ -365,11 +379,14 @@ void jogarUmaCarta(int jogador) {
 				}
 			} else if(jogador == (int) 2){
 				if((jogador2.cartasMao[2] -> nome.compare(cartaNula.nome) != 0)){ //se a carta na posicao dois nao � a carta nula
-					tabuleiro.cartasJogador2[getPosicaoVaziaNoCampo(jogador)] = jogador2.cartasMao[2];
-          tabuleiro.cartasJogador2[2] -> atacarBool = false;
-          if (tabuleiro.cartasJogador2[2] -> ataqueEspecial.compare("Iniciativa") == 0) {
-            tabuleiro.cartasJogador2[2] -> atacarBool = true;
-          }
+					int posicaoVazia = getPosicaoVaziaNoCampo(jogador);
+					tabuleiro.cartasJogador2[posicaoVazia] = jogador2.cartasMao[2];
+					tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = false;
+
+					if (tabuleiro.cartasJogador2[posicaoVazia] -> ataqueEspecial.compare("Iniciativa") == 0) {
+						tabuleiro.cartasJogador2[posicaoVazia] -> atacarBool = true;
+					}
+
 					std::cout << "O Jogador 2 invocou o(a) " << jogador2.cartasMao[2] -> nome << '\n';
 					jogador2.cartasMao[2] = &cartaNula;
 				} else {
