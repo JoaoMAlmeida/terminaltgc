@@ -12,11 +12,11 @@ bool :: Bool
 data Jogador = Jogador{
 nomeJogador :: String,
 vidaJogador :: Int,
+cartasTabuleiro :: [Card],
 mao :: [Card]
 }  deriving(Show)
 
 data Tabuleiro = Tabuleiro{
-cartasJogador1 :: [Card],
 cartasJogador2 :: [Card]
 }deriving(Show)
 
