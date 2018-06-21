@@ -78,8 +78,10 @@ printOpcao jogador = do
 
 escolhaOpcao:: Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao n opcao jogador1 jogador2
-    | opcao == "JC" = putStrLn("Jogou Carta") -- chamar função de jogar carta aqui
-    | opcao == "AJ" = putStrLn("Atacou Jogador") -- função equivalente
+    | opcao == "JC" = putStrLn("Jogou Carta") -- função equivalente
+    | opcao == "AJ" = do
+      cartaEscolhida <- getLine
+      (atacarJogador n cartaEscolhida jogador1 jogador2)
     | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
     | opcao == "FT" = (finalizarTurno n jogador1 jogador2)
     | otherwise = putStrLn("comando errado")
@@ -88,3 +90,13 @@ finalizarTurno:: Int -> Jogador -> Jogador -> IO()
 finalizarTurno n jogador1 jogador2 = do
   inicio n jogador1 jogador2
   putStrLn("")
+
+  atacarJogador:: Int -> Int -> Jogador -> Jogador -> IO()
+  atacarJogador n nCarta jogador1 jogador2 = do
+    if n == 1
+      then
+        vidaF = (vidaJogador jogador2) - ( ataque ((cartasTabuleiro jogador1) !! nCarta))
+        (vidaJogador jogador2) = vidaF
+      else
+        vidaF = (vidaJogador jogador1) - ( ataque ((cartasTabuleiro jogador2 !! nCarta))
+        (vidaJogador jogador1) = vidaF
