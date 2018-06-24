@@ -7,7 +7,10 @@ import System.Process
 
 main :: IO()
 main = do
-  inicio 1 jogador1 jogador2
+  inicio 1 novoJogador1 novoJogador2
+  where
+    novoJogador1 = sacaMao jogador1
+    novoJogador2 = sacaMao jogador2
 
 
 inicio :: Int -> Jogador -> Jogador -> IO()
@@ -76,13 +79,55 @@ printOpcao jogador = do
   putStrLn("Menssagem:")
   putStrLn("JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno")
 
+sacaMao:: Jogador -> Jogador
+sacaMao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) = Jogador nome vida tab novaMao where novaMao = sacaRecursivo 2
+
+sacaRecursivo:: Int -> [Card]
+sacaRecursivo y
+  | y == (-1) = []
+  | otherwise = cartas !! y : sacaRecursivo (y-1) where cartas = getCartas derk
+
+getCartas:: Baralho -> [Card]
+getCartas (Baralho {cartas = cards}) = cards
+
+jogaCarta:: String -> Jogador -> Jogador
+jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador})
+  | posicao == "1" = Jogador nome vida novoTab1 novaMao1
+  | posicao == "2" = Jogador nome vida novoTab2 novaMao2
+  | posicao == "3" = Jogador nome vida novoTab3 novaMao3
+  | otherwise = Jogador nome vida tab maoJogador
+  where
+    novoTab1 = jogaCartaNoTabuleiro (maoJogador !! 0) tab 3
+    novaMao1 = removeCartaDaMao (maoJogador !! 0) maoJogador
+    novoTab2 = jogaCartaNoTabuleiro (maoJogador !! 1) tab 3
+    novaMao2 = removeCartaDaMao (maoJogador !! 1) maoJogador
+    novoTab3 = jogaCartaNoTabuleiro (maoJogador !! 2) tab 3
+    novaMao3 = removeCartaDaMao (maoJogador !! 2) maoJogador
+
+jogaCartaNoTabuleiro:: Card -> [Card] -> Int -> [Card]
+jogaCartaNoTabuleiro carta (x:xs) index
+  | x == cartaNula = carta:xs
+  | (index == 0) && (x /= cartaNula) = x:xs
+  | otherwise = x:jogaCartaNoTabuleiro carta xs (index - 1)
+
+removeCartaDaMao:: Card -> [Card] -> [Card]
+removeCartaDaMao carta (x:xs)
+  | x == carta = cartaNula:xs
+  | otherwise = x:removeCartaDaMao carta xs
+
+selecionaCarta:: Int -> Jogador -> Jogador -> IO()
+selecionaCarta n jogador1 jogador2 = do
+  putStrLn("Escolha a carta a jogar (1, 2 ou 3)")
+  posicao <- getLine
+  if(n == 2) then inicio 1 (jogaCarta posicao jogador1) jogador2 else inicio 2 jogador1 (jogaCarta posicao jogador2)
+
 escolhaOpcao:: Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao n opcao jogador1 jogador2
-    | opcao == "JC" = putStrLn("Jogou Carta") -- chamar função de jogar carta aqui
-    | opcao == "AJ" = putStrLn("Atacou Jogador") -- função equivalente
-    | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
-    | opcao == "FT" = (finalizarTurno n jogador1 jogador2)
-    | otherwise = putStrLn("comando errado")
+  | opcao == "JC" = (selecionaCarta n jogador1 jogador2)
+  | opcao == "AJ" = putStrLn("Atacou Jogador") -- função equivalente
+  | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
+  | opcao == "FT" = (finalizarTurno n jogador1 jogador2)
+  | otherwise = putStrLn("comando errado")
 
 finalizarTurno:: Int -> Jogador -> Jogador -> IO()
 finalizarTurno n jogador1 jogador2 = do

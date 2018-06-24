@@ -9,10 +9,11 @@ fortex = Card "Fortex" 5 0 "Provocar" False
 cortanaAAntipatica = Card "Cortana A Antipatica" 4 1 "Provocar" False
 mercurioAlado = Card "Mercurio Alado" 3 2 "Iniciativa" False
 ciriAEngracada = Card "Ciri A Engracada" 1 3 "Nenhum" False
+cartaNula = Card "" 0 0 "Nenhum" False
 
 
 --                  nome     vide tabuleiro mao
-jogador1 = Jogador "Jogador1" 10 [reiDaMontanha,loboCeleste,espectroNegro] [ciriAEngracada,ciriAEngracada,cortanaAAntipatica]
-jogador2 = Jogador "Jogador2" 10 [fortex,reiDaMontanha,cortanaAAntipatica] [reiDaMontanha, loboCeleste, espectroNegro]
+jogador1 = Jogador "Jogador1" 10 [cartaNula, cartaNula, cartaNula] []
+jogador2 = Jogador "Jogador2" 10 [cartaNula, cartaNula, cartaNula] []
 
 derk = Baralho [reiDaMontanha, loboCeleste, espectroNegro, fortex, reiDaMontanha, cortanaAAntipatica, ciriAEngracada, ciriAEngracada]
