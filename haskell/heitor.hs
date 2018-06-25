@@ -9,8 +9,8 @@ main :: IO()
 main = do
   inicio 1 novoJogador1 novoJogador2
   where
-    novoJogador1 = sacaMao jogador1
-    novoJogador2 = sacaMao jogador2
+    novoJogador1 = sacaMao 0 jogador1
+    novoJogador2 = sacaMao 4 jogador2
 
 
 inicio :: Int -> Jogador -> Jogador -> IO()
@@ -80,12 +80,12 @@ printOpcao jogador = do
   putStrLn("Menssagem:")
   putStrLn("JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno")
 
-sacaMao:: Jogador -> Jogador
-sacaMao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) = Jogador nome vida tab novaMao where novaMao = sacaRecursivo 2
+sacaMao:: Int -> Jogador -> Jogador
+sacaMao n (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) = Jogador nome vida tab novaMao where novaMao = sacaRecursivo $ 2+n
 
 sacaRecursivo:: Int -> [Card]
 sacaRecursivo y
-  | y == (-1) = []
+  | y == (-1) || y == 3 = []
   | otherwise = cartas !! y : sacaRecursivo (y-1) where cartas = getCartas derk
 
 getCartas:: Baralho -> [Card]
