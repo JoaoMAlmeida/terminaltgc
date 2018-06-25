@@ -28,6 +28,7 @@ inicio n jogador1 jogador2 = do
 
 
 
+
 printTopo :: Jogador -> Jogador ->IO()
 printTopo jogador1 jogador2 = do
   putStrLn("----------------------------------------")
@@ -90,6 +91,19 @@ sacaRecursivo y
 getCartas:: Baralho -> [Card]
 getCartas (Baralho {cartas = cards}) = cards
 
+puxaCarta:: Jogador -> Jogador
+puxaCarta (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) =
+  Jogador nome vida tab novaMao where novaMao = puxaCartaRecursivo maoJogador
+
+
+puxaCartaRecursivo:: [Card] -> [Card]
+puxaCartaRecursivo (x:xs)
+  | x == cartaNula = novaCarta:xs
+  | otherwise = x:puxaCartaRecursivo xs
+
+novaCarta:: Card
+novaCarta = (getCartas derk) !! 5;
+
 jogaCarta:: String -> Jogador -> Jogador
 jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador})
   | posicao == "1" = Jogador nome vida novoTab1 novaMao1
@@ -131,5 +145,10 @@ escolhaOpcao n opcao jogador1 jogador2
 
 finalizarTurno:: Int -> Jogador -> Jogador -> IO()
 finalizarTurno n jogador1 jogador2 = do
-  inicio n jogador1 jogador2
   putStrLn("")
+  if n == 2
+    then inicio n novoJogador1 jogador2
+    else inicio n jogador1 novoJogador2
+  where
+    novoJogador1 = puxaCarta jogador1
+    novoJogador2 = puxaCarta jogador2
