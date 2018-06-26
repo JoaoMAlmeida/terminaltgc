@@ -21,9 +21,9 @@ inicio contador n jogador1 jogador2 = do
   printTopo jogador1 jogador2
   -- printa o tabuleiro dos dois jogadores
   printTabuleiro jogador1 jogador2
-  -- se for o jogador 1 printa a mao do jogador1
+  -- contador para puxar carta
   let novoContador = if(contador == 7) then 0 else contador + 1
-
+  -- se for o jogador 1 printa a mao do jogador1
   if n == 1
     then opcaoJogador1 novoContador jogador1 jogador2
     else opcaoJogador2 novoContador jogador1 jogador2
