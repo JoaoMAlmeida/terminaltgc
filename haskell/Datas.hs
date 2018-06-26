@@ -6,7 +6,7 @@ ataque :: Int,
 vida :: Int,
 poder :: String,
 bool :: Bool
-} deriving(Show)
+} deriving(Show, Eq)
 
 
 data Jogador = Jogador{
