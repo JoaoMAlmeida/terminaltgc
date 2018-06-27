@@ -13,8 +13,8 @@ main = do
     novoJogador2 = sacaMao 4 jogador2
 
 
-inicio :: Int -> Int -> Jogador -> Jogador -> IO()
-inicio contador n jogador1 jogador2 = do
+inicio :: Int -> Int -> Jogador -> Int -> Jogador -> Int -> IO()
+inicio contador n jogador1 hpJ1 jogador2 hpJ2 = do
   --limpa tela
   system "clear"
   --printa o topo
@@ -140,7 +140,7 @@ selecionaCarta contador n jogador1 jogador2 = do
 escolhaOpcao:: Int-> Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao contador n opcao jogador1 jogador2
   | opcao == "JC" = (selecionaCarta contador n jogador1 jogador2)
-  | opcao == "AJ" = putStrLn("Atacou Jogador") -- função equivalente
+  | opcao == "AJ" = (atacarJogador n jogador1 jogador2)
   | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
   | opcao == "FT" = (finalizarTurno contador n jogador1 jogador2)
   | otherwise = putStrLn("comando errado") >> if(n == 1) then inicio contador 2 jogador1 jogador2 else inicio contador 1 jogador1 jogador2
@@ -154,3 +154,11 @@ finalizarTurno contador n jogador1 jogador2 = do
   where
     novoJogador1 = puxaCarta contador jogador1
     novoJogador2 = puxaCarta contador jogador2
+
+atacarJogador:: Int -> Jogador -> Jogador -> Jogador
+atacarJogador n (Jogador {nomeJogador = nome1, vidaJogador = vida1, cartasTabuleiro = tab1, mao = maoJogador1}) (Jogador {nomeJogador = nome2, vidaJogador = vida2, cartasTabuleiro = tab2, mao = maoJogador2})
+  | n == 1 = Jogador nome1 novaVida1 tab1 maoJogador1
+  | otherwise = Jogador nome2 novaVida2 tab2 maoJogador2
+  where
+    novaVida1 = vida1 -2
+    novaVida2 = vida2 -2

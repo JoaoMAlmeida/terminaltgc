@@ -12,7 +12,7 @@ ciriAEngracada = Card "Ciri A Engracada" 1 3 "Nenhum" False
 cartaNula = Card "" 0 0 "Nenhum" False
 
 
---                  nome     vide tabuleiro mao
+--                  nome     vida tabuleiro mao
 jogador1 = Jogador "Jogador1" 10 [cartaNula, cartaNula, cartaNula] []
 jogador2 = Jogador "Jogador2" 10 [cartaNula, cartaNula, cartaNula] []
 
