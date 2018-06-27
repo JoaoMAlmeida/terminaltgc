@@ -13,7 +13,7 @@ main = do
     novoJogador2 = sacaMao 4 jogador2
 
 
-inicio :: Int -> Int -> Jogador -> Int -> Jogador -> Int -> IO()
+inicio :: Int -> Int -> Jogador -> Jogador -> IO()
 inicio contador n jogador1 jogador2 = do
   --limpa tela
   system "clear"
@@ -156,10 +156,10 @@ finalizarTurno contador n jogador1 jogador2 = do
     novoJogador2 = puxaCarta contador jogador2
 
 atacarJogadorInicio:: Int -> Int -> Jogador -> Jogador -> IO()
-  atacarJogadorInicio contador n jogador1 jogador2 = do
+atacarJogadorInicio contador n jogador1 jogador2 = do
   putStrLn("Escolha a carta a atacar (1, 2 ou 3)")
   --posicao <- getLine
-  if (n == 2) then inicio contador 1 (atacarJogador jogador1) jogador2 else inicio contador 2 jogador1 (atacarJogador jogador2)
+  if (n == 1) then inicio contador 1 (atacarJogador jogador1) jogador2 else inicio contador 2 jogador1 (atacarJogador jogador2)
 
 atacarJogador:: Jogador -> Jogador
 atacarJogador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) =
