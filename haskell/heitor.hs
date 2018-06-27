@@ -14,7 +14,7 @@ main = do
 
 
 inicio :: Int -> Int -> Jogador -> Int -> Jogador -> Int -> IO()
-inicio contador n jogador1 hpJ1 jogador2 hpJ2 = do
+inicio contador n jogador1 jogador2 = do
   --limpa tela
   system "clear"
   --printa o topo
@@ -140,12 +140,12 @@ selecionaCarta contador n jogador1 jogador2 = do
 escolhaOpcao:: Int-> Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao contador n opcao jogador1 jogador2
   | opcao == "JC" = (selecionaCarta contador n jogador1 jogador2)
-  | opcao == "AJ" = (atacarJogador n jogador1 jogador2)
+  | opcao == "AJ" = (atacarJogadorInicio contador n jogador1 jogador2)
   | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
   | opcao == "FT" = (finalizarTurno contador n jogador1 jogador2)
   | otherwise = putStrLn("comando errado") >> if(n == 1) then inicio contador 2 jogador1 jogador2 else inicio contador 1 jogador1 jogador2
 
-finalizarTurno:: Int-> Int -> Jogador -> Jogador -> IO()
+finalizarTurno:: Int -> Int -> Jogador -> Jogador -> IO()
 finalizarTurno contador n jogador1 jogador2 = do
   putStrLn("")
   if n == 2
@@ -155,10 +155,14 @@ finalizarTurno contador n jogador1 jogador2 = do
     novoJogador1 = puxaCarta contador jogador1
     novoJogador2 = puxaCarta contador jogador2
 
-atacarJogador:: Int -> Jogador -> Jogador -> Jogador
-atacarJogador n (Jogador {nomeJogador = nome1, vidaJogador = vida1, cartasTabuleiro = tab1, mao = maoJogador1}) (Jogador {nomeJogador = nome2, vidaJogador = vida2, cartasTabuleiro = tab2, mao = maoJogador2})
-  | n == 1 = Jogador nome1 novaVida1 tab1 maoJogador1
-  | otherwise = Jogador nome2 novaVida2 tab2 maoJogador2
+atacarJogadorInicio:: Int -> Int -> Jogador -> Jogador -> IO()
+  atacarJogadorInicio contador n jogador1 jogador2 = do
+  putStrLn("Escolha a carta a atacar (1, 2 ou 3)")
+  --posicao <- getLine
+  if (n == 2) then inicio contador 1 (atacarJogador jogador1) jogador2 else inicio contador 2 jogador1 (atacarJogador jogador2)
+
+atacarJogador:: Jogador -> Jogador
+atacarJogador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) =
+  Jogador nome novaVida tab maoJogador
   where
-    novaVida1 = vida1 -2
-    novaVida2 = vida2 -2
+    novaVida = vida -2
