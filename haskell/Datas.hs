@@ -13,7 +13,8 @@ data Jogador = Jogador{
 nomeJogador :: String,
 vidaJogador :: Int,
 cartasTabuleiro :: [Card],
-mao :: [Card]
+mao :: [Card],
+atacar :: Bool
 }  deriving(Show)
 
 data Tabuleiro = Tabuleiro{

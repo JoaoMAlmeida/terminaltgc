@@ -13,7 +13,7 @@ cartaNula = Card "" 0 0 "Nenhum" False
 
 
 --                  nome     vida tabuleiro mao
-jogador1 = Jogador "Jogador1" 10 [cartaNula, cartaNula, cartaNula] []
-jogador2 = Jogador "Jogador2" 10 [cartaNula, cartaNula, cartaNula] []
+jogador1 = Jogador "Jogador1" 10 [cartaNula, cartaNula, cartaNula] [] True
+jogador2 = Jogador "Jogador2" 10 [cartaNula, cartaNula, cartaNula] [] True
 
 derk = Baralho [reiDaMontanha, loboCeleste, espectroNegro, fortex, reiDaMontanha, cortanaAAntipatica, ciriAEngracada, ciriAEngracada]
