@@ -114,23 +114,23 @@ novaCarta contador = (getCartas derk) !! contador
 
 jogaCarta:: String -> Jogador -> Jogador
 jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, atacar = atk})
-  | posicao == "1" = Jogador nome vida novoTab1 novaMao1 False
-  | posicao == "2" = Jogador nome vida novoTab2 novaMao2 False
-  | posicao == "3" = Jogador nome vida novoTab3 novaMao3 False
+  | read(posicao) <= 3 && read(posicao) >= 1 = Jogador nome vida novoTab novaMao False
   | otherwise = Jogador nome vida tab maoJogador atk
   where
-    novoTab1 = jogaCartaNoTabuleiro (maoJogador !! 0) tab 3
-    novaMao1 = removeCartaDaMao (maoJogador !! 0) maoJogador
-    novoTab2 = jogaCartaNoTabuleiro (maoJogador !! 1) tab 3
-    novaMao2 = removeCartaDaMao (maoJogador !! 1) maoJogador
-    novoTab3 = jogaCartaNoTabuleiro (maoJogador !! 2) tab 3
-    novaMao3 = removeCartaDaMao (maoJogador !! 2) maoJogador
+    novoTab = jogaCartaNoTabuleiro (verificaIniciativa (maoJogador !! (read posicao - 1))) tab 3
+    novaMao = removeCartaDaMao (maoJogador !! (read posicao - 1)) maoJogador
 
 jogaCartaNoTabuleiro:: Card -> [Card] -> Int -> [Card]
 jogaCartaNoTabuleiro carta (x:xs) index
   | x == cartaNula = carta:xs
   | (index == 0) && (x /= cartaNula) = x:xs
   | otherwise = x:jogaCartaNoTabuleiro carta xs (index - 1)
+
+verificaIniciativa:: Card -> Card
+verificaIniciativa (Card {nome = nome1, ataque = ataque1, vida = vida1, poder = poder1, bool = bool1}) =
+  if (poder1 == "Iniciativa")
+    then Card nome1 ataque1 vida1 poder1 True
+    else Card nome1 ataque1 vida1 poder1 False
 
 removeCartaDaMao:: Card -> [Card] -> [Card]
 removeCartaDaMao carta (x:xs)
@@ -142,8 +142,14 @@ selecionaCarta contador n jogador1 jogador2 = do
   putStrLn("Escolha a carta a jogar (1, 2 ou 3)")
   posicao <- getLine
   if(n == 2)
-    then if(atacar jogador1) then inicio contador 1 (jogaCarta posicao jogador1) jogador2 else inicio contador 1 jogador1 jogador2
-    else if(atacar jogador2) then inicio contador 2 jogador1 (jogaCarta posicao jogador2) else inicio contador 2 jogador1 jogador2
+    then
+      if(atacar jogador1)
+        then inicio contador 1 (jogaCarta posicao jogador1) jogador2
+        else inicio contador 1 jogador1 jogador2
+    else
+      if(atacar jogador2)
+        then inicio contador 2 jogador1 (jogaCarta posicao jogador2)
+        else inicio contador 2 jogador1 jogador2
 
 escolhaOpcao:: Int-> Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao contador n opcao jogador1 jogador2
