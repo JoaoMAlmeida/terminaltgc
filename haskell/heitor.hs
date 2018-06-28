@@ -16,13 +16,13 @@ main = do
 
 inicio :: Int -> Int -> Jogador -> Jogador -> IO()
 inicio contador n jogador1 jogador2 = do
+  --limpa tela
+  system "clear"
   --verifica condicao de vitoria
   if (vidaJogador (jogador1)) <= 0
     then fimDeJogo 2 else putStrLn("")
   if (vidaJogador (jogador2)) <= 0
     then fimDeJogo 1 else putStrLn("")
-  --limpa tela
-  system "clear"
   --printa o topo
   printTopo jogador1 jogador2
   -- printa o tabuleiro dos dois jogadores
