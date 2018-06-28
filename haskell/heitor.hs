@@ -141,7 +141,7 @@ escolhaOpcao:: Int-> Int -> String -> Jogador -> Jogador -> IO()
 escolhaOpcao contador n opcao jogador1 jogador2
   | opcao == "JC" = (selecionaCarta contador n jogador1 jogador2)
   | opcao == "AJ" = (atacarJogadorInicio contador n jogador1 jogador2)
-  | opcao == "AC" = putStrLn("Atacou Carta") -- função equivalente
+  | opcao == "AC" = (atacarCartaInicio contador n jogador1 jogador2)
   | opcao == "FT" = (finalizarTurno contador n jogador1 jogador2)
   | otherwise = putStrLn("comando errado") >> if(n == 1) then inicio contador 2 jogador1 jogador2 else inicio contador 1 jogador1 jogador2
 
@@ -157,12 +157,40 @@ finalizarTurno contador n jogador1 jogador2 = do
 
 atacarJogadorInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarJogadorInicio contador n jogador1 jogador2 = do
-  putStrLn("Escolha a carta a atacar (1, 2 ou 3)")
-  --posicao <- getLine
-  if (n == 1) then inicio contador 1 (atacarJogador jogador1) jogador2 else inicio contador 2 jogador1 (atacarJogador jogador2)
+  putStrLn("Escolha uma carta sua para atacar (1, 2 ou 3)")
+  posicao <- getLine
+  if (n == 1) then inicio contador 2 (atacarJogador posicao jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarJogador posicao jogador1 jogador2)
 
-atacarJogador:: Jogador -> Jogador
-atacarJogador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador}) =
-  Jogador nome novaVida tab maoJogador
+atacarJogador:: String -> Jogador -> Jogador -> Jogador
+atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador})
+  | posicao <= "3" && posicao >="1" = Jogador nome novaVida tab maoJogador
+  | otherwise = Jogador nome vida tab maoJogador
   where
-    novaVida = vida -2
+    novaVida = vidaInimigo - ataque (tabJogador !! posicao -1)
+
+atacarCartaInicio:: Int -> Int -> Jogador -> Jogador -> IO()
+atacarCartaInicio contador n jogador1 jogador2 = do
+  putStrLn("Escolha uma carta sua para atacar (1, 2 ou 3)")
+  posicao <- getLine
+  putStrLn("Escolha a carta inimiga que deseja atacar (1, 2 ou 3)")
+  posicaoInimiga <- getLine
+  if (n == 1) then inicio contador 2 (atacarCarta posicao posicaoInimiga jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarCarta posicao posicaoInimiga jogador1 jogador2)
+
+trocarCarta:: Card -> Card -> Card[] -> Card[]
+trocarCarta cartaAntiga cartaNova (x:xs)
+  | x == cartaAntiga = cartaNova:xs
+  | otherwise = x:trocarCarta cartaAntiga cartaNova xs
+
+atualizarHPCarta:: Card -> Card -> Card
+atualizarHPCarta (Card {ataque = ataqueJogador}) (Card {nome = nomeInimigo, ataque = ataqueInimigo, vida = vidaInimigo, poder = poderInimigo, bool = boolInimigo}) =
+  Card nomeInimigo ataqueInimigo novaVida  poderInimigo boolInimigo
+  where
+    novaVida = vidaInimigo - ataqueJogador
+
+
+atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
+atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga})
+  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" = Jogador nome vida novoTab maoInimiga
+  | otherwise = Jogador nome vida tabInimiga maoInimiga
+  where
+    novoTab = trocarCarta (tabInimiga !! read posicaoInimiga -1) (atualizarHPCarta (tabJogador !! read posicao -1) (tabInimiga !! read posicaoInimiga -1)) tabInimiga
