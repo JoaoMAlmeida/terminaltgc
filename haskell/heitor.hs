@@ -3,6 +3,7 @@ import Data.List
 import Datas
 import InstanceType
 import System.Process
+import System.Exit
 
 
 main :: IO()
@@ -15,6 +16,11 @@ main = do
 
 inicio :: Int -> Int -> Jogador -> Jogador -> IO()
 inicio contador n jogador1 jogador2 = do
+  --verifica condicao de vitoria
+  if (vidaJogador (jogador1)) <= 0
+    then fimDeJogo 2 else putStrLn("")
+  if (vidaJogador (jogador2)) <= 0
+    then fimDeJogo 1 else putStrLn("")
   --limpa tela
   system "clear"
   --printa o topo
@@ -182,11 +188,11 @@ trocarCarta cartaAntiga cartaNova (x:xs)
   | otherwise = x:trocarCarta cartaAntiga cartaNova xs
 
 atualizarHPCarta:: Card -> Card -> Card
-atualizarHPCarta (Card {ataque = ataqueJogador}) (Card {nome = nomeInimigo, ataque = ataqueInimigo, vida = vidaInimigo, poder = poderInimigo, bool = boolInimigo}) =
-  Card nomeInimigo ataqueInimigo novaVida  poderInimigo boolInimigo
+atualizarHPCarta (Card {ataque = ataqueJogador}) (Card {nome = nomeInimigo, ataque = ataqueInimigo, vida = vidaInimigo, poder = poderInimigo, bool = boolInimigo})
+  | novaVida > 0 = Card nomeInimigo ataqueInimigo novaVida  poderInimigo boolInimigo
+  | otherwise = cartaNula
   where
     novaVida = vidaInimigo - ataqueJogador
-
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
 atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga})
@@ -194,3 +200,9 @@ atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jog
   | otherwise = Jogador nome vida tabInimiga maoInimiga
   where
     novoTab = trocarCarta (tabInimiga !! (read posicaoInimiga -1)) (atualizarHPCarta (tabJogador !! (read posicao -1)) (tabInimiga !! (read posicaoInimiga -1))) tabInimiga
+
+fimDeJogo:: Int -> IO()
+fimDeJogo vencedor = do
+  putStrLn("O jogo acabou:")
+  putStrLn("O jogador " ++ show vencedor ++ " venceu.")
+  exitSuccess
