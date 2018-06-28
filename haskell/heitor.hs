@@ -164,9 +164,9 @@ atacarJogadorInicio contador n jogador1 jogador2 = do
 atacarJogador:: String -> Jogador -> Jogador -> Jogador
 atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador})
   | posicao <= "3" && posicao >="1" = Jogador nome novaVida tab maoJogador
-  | otherwise = Jogador nome vida tab maoJogador
+  | otherwise = Jogador nome vidaInimigo tab maoJogador
   where
-    novaVida = vidaInimigo - ataque (tabJogador !! posicao -1)
+    novaVida = vidaInimigo - ataque (tabJogador !! (read posicao -1))
 
 atacarCartaInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarCartaInicio contador n jogador1 jogador2 = do
@@ -176,7 +176,7 @@ atacarCartaInicio contador n jogador1 jogador2 = do
   posicaoInimiga <- getLine
   if (n == 1) then inicio contador 2 (atacarCarta posicao posicaoInimiga jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarCarta posicao posicaoInimiga jogador1 jogador2)
 
-trocarCarta:: Card -> Card -> Card[] -> Card[]
+trocarCarta:: Card -> Card -> [Card] -> [Card]
 trocarCarta cartaAntiga cartaNova (x:xs)
   | x == cartaAntiga = cartaNova:xs
   | otherwise = x:trocarCarta cartaAntiga cartaNova xs
@@ -193,4 +193,4 @@ atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jog
   | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" = Jogador nome vida novoTab maoInimiga
   | otherwise = Jogador nome vida tabInimiga maoInimiga
   where
-    novoTab = trocarCarta (tabInimiga !! read posicaoInimiga -1) (atualizarHPCarta (tabJogador !! read posicao -1) (tabInimiga !! read posicaoInimiga -1)) tabInimiga
+    novoTab = trocarCarta (tabInimiga !! (read posicaoInimiga -1)) (atualizarHPCarta (tabJogador !! (read posicao -1)) (tabInimiga !! (read posicaoInimiga -1))) tabInimiga
