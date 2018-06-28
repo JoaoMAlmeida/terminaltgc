@@ -169,8 +169,8 @@ atacarJogadorInicio contador n jogador1 jogador2 = do
 
 atacarJogador:: String -> Jogador -> Jogador -> Jogador
 atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador})
-  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" = Jogador nome novaVida2 tab maoJogador
-  | posicao <= "3" && posicao >="1" = Jogador nome novaVida tab maoJogador
+  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" && (not (verificaProvocar tab)) = Jogador nome novaVida2 tab maoJogador
+  | posicao <= "3" && posicao >="1" && (not (verificaProvocar tab)) = Jogador nome novaVida tab maoJogador
   | otherwise = Jogador nome vidaInimigo tab maoJogador
   where
     novaVida = vidaInimigo - ataque (tabJogador !! (read posicao -1))
@@ -200,10 +200,16 @@ atualizarHPCarta (Card {ataque = ataqueJogador, poder = poderJogador}) (Card {no
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
 atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga})
-  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" = Jogador nome vida novoTab maoInimiga
+  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) = Jogador nome vida novoTab maoInimiga
   | otherwise = Jogador nome vida tabInimiga maoInimiga
   where
     novoTab = trocarCarta (tabInimiga !! (read posicaoInimiga -1)) (atualizarHPCarta (tabJogador !! (read posicao -1)) (tabInimiga !! (read posicaoInimiga -1))) tabInimiga
+
+verificaProvocar:: [Card] -> Bool
+verificaProvocar (x:xs)
+  | poder x == "Provocar" = True
+  | xs == [] = False
+  | otherwise = verificaProvocar xs
 
 fimDeJogo:: Int -> IO()
 fimDeJogo vencedor = do
