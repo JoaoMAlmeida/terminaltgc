@@ -169,10 +169,12 @@ atacarJogadorInicio contador n jogador1 jogador2 = do
 
 atacarJogador:: String -> Jogador -> Jogador -> Jogador
 atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador})
+  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" = Jogador nome novaVida2 tab maoJogador
   | posicao <= "3" && posicao >="1" = Jogador nome novaVida tab maoJogador
   | otherwise = Jogador nome vidaInimigo tab maoJogador
   where
     novaVida = vidaInimigo - ataque (tabJogador !! (read posicao -1))
+    novaVida2 = vidaInimigo - (ataque (tabJogador !! (read posicao -1)) *2)
 
 atacarCartaInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarCartaInicio contador n jogador1 jogador2 = do
@@ -188,11 +190,13 @@ trocarCarta cartaAntiga cartaNova (x:xs)
   | otherwise = x:trocarCarta cartaAntiga cartaNova xs
 
 atualizarHPCarta:: Card -> Card -> Card
-atualizarHPCarta (Card {ataque = ataqueJogador}) (Card {nome = nomeInimigo, ataque = ataqueInimigo, vida = vidaInimigo, poder = poderInimigo, bool = boolInimigo})
+atualizarHPCarta (Card {ataque = ataqueJogador, poder = poderJogador}) (Card {nome = nomeInimigo, ataque = ataqueInimigo, vida = vidaInimigo, poder = poderInimigo, bool = boolInimigo})
+  | novaVida > 0 && poderJogador == "Ataque Duplo" = Card nomeInimigo ataqueInimigo novaVida2  poderInimigo boolInimigo
   | novaVida > 0 = Card nomeInimigo ataqueInimigo novaVida  poderInimigo boolInimigo
   | otherwise = cartaNula
   where
     novaVida = vidaInimigo - ataqueJogador
+    novaVida2 = vidaInimigo - (ataqueJogador *2)
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
 atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga})
