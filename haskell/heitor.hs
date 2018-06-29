@@ -28,7 +28,7 @@ inicio contador n jogador1 jogador2 = do
   -- printa o tabuleiro dos dois jogadores
   printTabuleiro jogador1 jogador2
   -- contador para puxar carta
-  let novoContador = if(contador == 7) then 0 else contador + 1
+  let novoContador = if(contador == (tamanhoArray (cartas derk))) then 0 else contador + 1
   -- se for o jogador 1 printa a mao do jogador1
   if n == 1
     then opcaoJogador1 novoContador jogador1 jogador2
@@ -101,6 +101,10 @@ sacaRecursivo y
 
 getCartas:: Baralho -> [Card]
 getCartas (Baralho {cartas = cards}) = cards
+
+tamanhoArray:: [Card] -> Int
+tamanhoArray [] = 0
+tamanhoArray (x:xs) = 1 + (tamanhoArray xs)
 
 puxaCarta:: Int -> Jogador -> Jogador
 puxaCarta contador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1}) =
