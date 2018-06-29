@@ -185,7 +185,10 @@ habilitaAtaqueCartasInicio (Jogador {nomeJogador = nome, vidaJogador = vida, car
     novoTab = habilitaAtaqueCartas tab
 
 habilitaAtaqueCartas:: [Card] -> [Card]
-habilitaAtaqueCartas [x] = [Card (nome x) (ataque x) (vida x) (poder x) True]
+habilitaAtaqueCartas [x] =
+  if(x == cartaNula)
+    then [x]
+    else [Card (nome x) (ataque x) (vida x) (poder x) True]
 habilitaAtaqueCartas [] = []
 habilitaAtaqueCartas (x:xs)
   | x == cartaNula = cartaNula:(habilitaAtaqueCartas xs)
