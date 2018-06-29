@@ -122,7 +122,7 @@ jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabule
   | read(posicao) <= 3 && read(posicao) >= 1 = Jogador nome vida novoTab novaMao False
   | otherwise = Jogador nome vida tab maoJogador jogaCarta1
   where
-    novoTab = jogaCartaNoTabuleiro (verificaIniciativa (maoJogador !! (read posicao - 1))) tab
+    novoTab = jogaCartaNoTabuleiro (maoJogador !! (read posicao - 1)) tab
     novaMao = if(tab == novoTab) then maoJogador else removeCartaDaMao (maoJogador !! (read posicao - 1)) maoJogador
 
 jogaCartaNoTabuleiro:: Card -> [Card] -> [Card]
@@ -134,12 +134,6 @@ jogaCartaNoTabuleiro carta [x] =
 jogaCartaNoTabuleiro carta (x:xs)
   | x == cartaNula = carta:xs
   | otherwise = x:jogaCartaNoTabuleiro carta xs
-
-verificaIniciativa:: Card -> Card
-verificaIniciativa (Card {nome = nome1, ataque = ataque1, vida = vida1, poder = poder1, bool = bool1}) =
-  if (poder1 == "Iniciativa")
-    then Card nome1 ataque1 vida1 poder1 True
-    else Card nome1 ataque1 vida1 poder1 False
 
 removeCartaDaMao:: Card -> [Card] -> [Card]
 removeCartaDaMao carta (x:xs)
@@ -203,16 +197,36 @@ atacarJogadorInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarJogadorInicio contador n jogador1 jogador2 = do
   putStrLn("Escolha uma carta sua para atacar (1, 2 ou 3)")
   posicao <- getLine
-  if (n == 1) then inicio contador 2 (atacarJogador posicao jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarJogador posicao jogador1 jogador2)
+
+  let posicaoInt = read(posicao) - 1
+
+  if (n == 1)
+    then inicio contador 2 (atacarJogador posicao jogador2 jogador1) (proibeCartaAtacar posicaoInt jogador2)
+    else inicio contador 1 (proibeCartaAtacar posicaoInt jogador1) (atacarJogador posicao jogador1 jogador2)
 
 atacarJogador:: String -> Jogador -> Jogador -> Jogador
 atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1})
-  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" && (not (verificaProvocar tab)) = Jogador nome novaVida2 tab maoJogador jogaCarta1
-  | posicao <= "3" && posicao >="1" && (not (verificaProvocar tab)) = Jogador nome novaVida tab maoJogador jogaCarta1
+  | posicao <= "3" && posicao >="1" && (poder carta) == "Ataque Duplo" && (not (verificaProvocar tab) && (bool carta)) = Jogador nome novaVida2 tab maoJogador jogaCarta1
+  | posicao <= "3" && posicao >="1" && (not (verificaProvocar tab) && (bool carta)) = Jogador nome novaVida tab maoJogador jogaCarta1
   | otherwise = Jogador nome vidaInimigo tab maoJogador jogaCarta1
   where
-    novaVida = vidaInimigo - ataque (tabJogador !! (read posicao -1))
-    novaVida2 = vidaInimigo - (ataque (tabJogador !! (read posicao -1)) *2)
+    carta = (tabJogador !! (read posicao -1))
+    novaVida = vidaInimigo - ataque carta
+    novaVida2 = vidaInimigo - ((ataque carta) *2)
+
+proibeCartaAtacar:: Int -> Jogador -> Jogador
+proibeCartaAtacar posicao (Jogador {nomeJogador = nome1, vidaJogador = vida1, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1})
+  | posicao == 0 = Jogador nome1 vida1 novoTab1 maoJogador jogaCarta1
+  | posicao == 1 = Jogador nome1 vida1 novoTab2 maoJogador jogaCarta1
+  | posicao == 2 = Jogador nome1 vida1 novoTab3 maoJogador jogaCarta1
+  where
+    carta1 = tab !! 0
+    carta2 = tab !! 1
+    carta3 = tab !! 2
+    novoTab1 = [Card (nome carta1) (ataque carta1) (vida carta1) (poder carta1) False] ++ [carta2] ++ [carta3]
+    novoTab2 = [carta1] ++ [Card (nome carta2) (ataque carta2) (vida carta2) (poder carta2) False] ++ [carta3]
+    novoTab3 = [carta1] ++ [carta2] ++ [Card (nome carta3) (ataque carta3) (vida carta3) (poder carta3) False]
+
 
 atacarCartaInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarCartaInicio contador n jogador1 jogador2 = do
@@ -220,7 +234,12 @@ atacarCartaInicio contador n jogador1 jogador2 = do
   posicao <- getLine
   putStrLn("Escolha a carta inimiga que deseja atacar (1, 2 ou 3)")
   posicaoInimiga <- getLine
-  if (n == 1) then inicio contador 2 (atacarCarta posicao posicaoInimiga jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarCarta posicao posicaoInimiga jogador1 jogador2)
+
+  let posicaoInt = read(posicao) - 1
+
+  if (n == 1)
+    then inicio contador 2 (atacarCarta posicao posicaoInimiga jogador2 jogador1) (proibeCartaAtacar posicaoInt jogador2)
+    else inicio contador 1 (proibeCartaAtacar posicaoInt jogador1) (atacarCarta posicao posicaoInimiga jogador1 jogador2)
 
 trocarCarta:: Card -> Card -> [Card] -> [Card]
 trocarCarta cartaAntiga cartaNova (x:xs)
@@ -238,7 +257,7 @@ atualizarHPCarta (Card {ataque = ataqueJogador, poder = poderJogador}) (Card {no
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
 atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga, jogarCarta = jogaCartaInimigo})
-  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) = Jogador nome vida novoTab maoInimiga jogaCartaInimigo
+  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) && (bool (tabJogador !! (read posicao - 1))) = Jogador nome vida novoTab maoInimiga jogaCartaInimigo
   | otherwise = Jogador nome vida tabInimiga maoInimiga jogaCartaInimigo
   where
     novoTab = trocarCarta (tabInimiga !! (read posicaoInimiga -1)) (atualizarHPCarta (tabJogador !! (read posicao -1)) (tabInimiga !! (read posicaoInimiga -1))) tabInimiga
