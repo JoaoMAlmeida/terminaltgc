@@ -8,7 +8,6 @@ poder :: String,
 bool :: Bool
 } deriving(Show, Eq)
 
-
 data Jogador = Jogador{
 nomeJogador :: String,
 vidaJogador :: Int,

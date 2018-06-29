@@ -5,7 +5,7 @@ import InstanceType
 import System.Process
 import System.Exit
 
-
+-- Inicio do Jogo
 main :: IO()
 main = do
   inicio 0 1 novoJogador1 novoJogador2
@@ -33,9 +33,6 @@ inicio contador n jogador1 jogador2 = do
   if n == 1
     then opcaoJogador1 novoContador jogador1 jogador2
     else opcaoJogador2 novoContador jogador1 jogador2
-
-
-
 
 printTopo :: Jogador -> Jogador ->IO()
 printTopo jogador1 jogador2 = do
@@ -72,7 +69,6 @@ opcaoJogador2 contador jogador1 jogador2 = do
   --ler as opções apos o fim da funcao acima
   opcao <- getLine
   escolhaOpcao contador 1 (opcao) jogador1 jogador2
-
 
 printMao :: Jogador -> IO()
 printMao jogador = do
@@ -111,7 +107,6 @@ puxaCarta contador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabul
   Jogador nome vida tab novaMao jogaCarta1
   where
     novaMao = puxaCartaRecursivo contador maoJogador
-
 
 puxaCartaRecursivo:: Int -> [Card] -> [Card]
 puxaCartaRecursivo contador (x:xs)
@@ -193,7 +188,6 @@ habilitaAtaqueCartas (x:xs)
   | otherwise = novaCarta:(habilitaAtaqueCartas xs) where
     novaCarta = Card (nome x) (ataque x) (vida x) (poder x) True
 
-
 habilitaJogarCarta:: Jogador -> Jogador
 habilitaJogarCarta jogador = Jogador (nomeJogador jogador) (vidaJogador jogador) (cartasTabuleiro jogador) (mao jogador) True
 
@@ -230,7 +224,6 @@ proibeCartaAtacar posicao (Jogador {nomeJogador = nome1, vidaJogador = vida1, ca
     novoTab1 = [Card (nome carta1) (ataque carta1) (vida carta1) (poder carta1) False] ++ [carta2] ++ [carta3]
     novoTab2 = [carta1] ++ [Card (nome carta2) (ataque carta2) (vida carta2) (poder carta2) False] ++ [carta3]
     novoTab3 = [carta1] ++ [carta2] ++ [Card (nome carta3) (ataque carta3) (vida carta3) (poder carta3) False]
-
 
 atacarCartaInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarCartaInicio contador n jogador1 jogador2 = do
