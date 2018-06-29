@@ -89,7 +89,10 @@ printOpcao jogador = do
   putStrLn("JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno")
 
 sacaMao:: Int -> Jogador -> Jogador
-sacaMao n (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, atacar = atk}) = Jogador nome vida tab novaMao atk where novaMao = sacaRecursivo $ 2+n
+sacaMao n (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1}) =
+  Jogador nome vida tab novaMao jogaCarta1
+  where
+    novaMao = sacaRecursivo $ 2+n
 
 sacaRecursivo:: Int -> [Card]
 sacaRecursivo y
@@ -100,8 +103,10 @@ getCartas:: Baralho -> [Card]
 getCartas (Baralho {cartas = cards}) = cards
 
 puxaCarta:: Int -> Jogador -> Jogador
-puxaCarta contador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, atacar = atk}) =
-  Jogador nome vida tab novaMao atk where novaMao = puxaCartaRecursivo contador maoJogador
+puxaCarta contador (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1}) =
+  Jogador nome vida tab novaMao jogaCarta1
+  where
+    novaMao = puxaCartaRecursivo contador maoJogador
 
 
 puxaCartaRecursivo:: Int -> [Card] -> [Card]
@@ -113,18 +118,22 @@ novaCarta:: Int -> Card
 novaCarta contador = (getCartas derk) !! contador
 
 jogaCarta:: String -> Jogador -> Jogador
-jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, atacar = atk})
+jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1})
   | read(posicao) <= 3 && read(posicao) >= 1 = Jogador nome vida novoTab novaMao False
-  | otherwise = Jogador nome vida tab maoJogador atk
+  | otherwise = Jogador nome vida tab maoJogador jogaCarta1
   where
-    novoTab = jogaCartaNoTabuleiro (verificaIniciativa (maoJogador !! (read posicao - 1))) tab 3
+    novoTab = jogaCartaNoTabuleiro (verificaIniciativa (maoJogador !! (read posicao - 1))) tab
     novaMao = removeCartaDaMao (maoJogador !! (read posicao - 1)) maoJogador
 
-jogaCartaNoTabuleiro:: Card -> [Card] -> Int -> [Card]
-jogaCartaNoTabuleiro carta (x:xs) index
+jogaCartaNoTabuleiro:: Card -> [Card] -> [Card]
+jogaCartaNoTabuleiro carta [] = []
+jogaCartaNoTabuleiro carta [x] =
+  if (x == cartaNula)
+    then [carta]
+    else [x]
+jogaCartaNoTabuleiro carta (x:xs)
   | x == cartaNula = carta:xs
-  | (index == 0) && (x /= cartaNula) = x:xs
-  | otherwise = x:jogaCartaNoTabuleiro carta xs (index - 1)
+  | otherwise = x:jogaCartaNoTabuleiro carta xs
 
 verificaIniciativa:: Card -> Card
 verificaIniciativa (Card {nome = nome1, ataque = ataque1, vida = vida1, poder = poder1, bool = bool1}) =
@@ -143,11 +152,11 @@ selecionaCarta contador n jogador1 jogador2 = do
   posicao <- getLine
   if(n == 2)
     then
-      if(atacar jogador1)
+      if(jogarCarta jogador1)
         then inicio contador 1 (jogaCarta posicao jogador1) jogador2
         else inicio contador 1 jogador1 jogador2
     else
-      if(atacar jogador2)
+      if(jogarCarta jogador2)
         then inicio contador 2 jogador1 (jogaCarta posicao jogador2)
         else inicio contador 2 jogador1 jogador2
 
@@ -166,8 +175,26 @@ finalizarTurno contador n jogador1 jogador2 = do
     then inicio contador n novoJogador1 jogador2
     else inicio contador n jogador1 novoJogador2
   where
-    novoJogador1 = puxaCarta contador jogador1
-    novoJogador2 = puxaCarta contador jogador2
+    novoJogador1 = puxaCarta contador (habilitaJogarCarta (habilitaAtaqueCartasInicio jogador1))
+    novoJogador2 = puxaCarta contador (habilitaJogarCarta (habilitaAtaqueCartasInicio jogador2))
+
+habilitaAtaqueCartasInicio:: Jogador -> Jogador
+habilitaAtaqueCartasInicio (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tab, mao = mao1, jogarCarta = jogaCarta1}) =
+  Jogador nome vida novoTab mao1 jogaCarta1
+  where
+    novoTab = habilitaAtaqueCartas tab
+
+habilitaAtaqueCartas:: [Card] -> [Card]
+habilitaAtaqueCartas [x] = [Card (nome x) (ataque x) (vida x) (poder x) True]
+habilitaAtaqueCartas [] = []
+habilitaAtaqueCartas (x:xs)
+  | x == cartaNula = cartaNula:(habilitaAtaqueCartas xs)
+  | otherwise = novaCarta:(habilitaAtaqueCartas xs) where
+    novaCarta = Card (nome x) (ataque x) (vida x) (poder x) True
+
+
+habilitaJogarCarta:: Jogador -> Jogador
+habilitaJogarCarta jogador = Jogador (nomeJogador jogador) (vidaJogador jogador) (cartasTabuleiro jogador) (mao jogador) True
 
 atacarJogadorInicio:: Int -> Int -> Jogador -> Jogador -> IO()
 atacarJogadorInicio contador n jogador1 jogador2 = do
@@ -176,10 +203,10 @@ atacarJogadorInicio contador n jogador1 jogador2 = do
   if (n == 1) then inicio contador 2 (atacarJogador posicao jogador2 jogador1) jogador2 else inicio contador 1 jogador1 (atacarJogador posicao jogador1 jogador2)
 
 atacarJogador:: String -> Jogador -> Jogador -> Jogador
-atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador, atacar = atk})
-  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" && (not (verificaProvocar tab)) = Jogador nome novaVida2 tab maoJogador atk
-  | posicao <= "3" && posicao >="1" && (not (verificaProvocar tab)) = Jogador nome novaVida tab maoJogador atk
-  | otherwise = Jogador nome vidaInimigo tab maoJogador atk
+atacarJogador posicao (Jogador {cartasTabuleiro = tabJogador}) (Jogador {nomeJogador = nome, vidaJogador = vidaInimigo, cartasTabuleiro = tab, mao = maoJogador, jogarCarta = jogaCarta1})
+  | posicao <= "3" && posicao >="1" && poder (tabJogador !! (read posicao -1)) == "Ataque Duplo" && (not (verificaProvocar tab)) = Jogador nome novaVida2 tab maoJogador jogaCarta1
+  | posicao <= "3" && posicao >="1" && (not (verificaProvocar tab)) = Jogador nome novaVida tab maoJogador jogaCarta1
+  | otherwise = Jogador nome vidaInimigo tab maoJogador jogaCarta1
   where
     novaVida = vidaInimigo - ataque (tabJogador !! (read posicao -1))
     novaVida2 = vidaInimigo - (ataque (tabJogador !! (read posicao -1)) *2)
@@ -207,9 +234,9 @@ atualizarHPCarta (Card {ataque = ataqueJogador, poder = poderJogador}) (Card {no
     novaVida2 = vidaInimigo - (ataqueJogador *2)
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
-atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga, atacar = atkInimigo})
-  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) = Jogador nome vida novoTab maoInimiga atkInimigo
-  | otherwise = Jogador nome vida tabInimiga maoInimiga atkInimigo
+atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga, jogarCarta = jogaCartaInimigo})
+  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) = Jogador nome vida novoTab maoInimiga jogaCartaInimigo
+  | otherwise = Jogador nome vida tabInimiga maoInimiga jogaCartaInimigo
   where
     novoTab = trocarCarta (tabInimiga !! (read posicaoInimiga -1)) (atualizarHPCarta (tabJogador !! (read posicao -1)) (tabInimiga !! (read posicaoInimiga -1))) tabInimiga
 

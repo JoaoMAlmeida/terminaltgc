@@ -14,7 +14,7 @@ nomeJogador :: String,
 vidaJogador :: Int,
 cartasTabuleiro :: [Card],
 mao :: [Card],
-atacar :: Bool
+jogarCarta :: Bool
 }  deriving(Show)
 
 data Tabuleiro = Tabuleiro{
