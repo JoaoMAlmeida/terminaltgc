@@ -123,7 +123,7 @@ jogaCarta posicao (Jogador {nomeJogador = nome, vidaJogador = vida, cartasTabule
   | otherwise = Jogador nome vida tab maoJogador jogaCarta1
   where
     novoTab = jogaCartaNoTabuleiro (verificaIniciativa (maoJogador !! (read posicao - 1))) tab
-    novaMao = removeCartaDaMao (maoJogador !! (read posicao - 1)) maoJogador
+    novaMao = if(tab == novoTab) then maoJogador else removeCartaDaMao (maoJogador !! (read posicao - 1)) maoJogador
 
 jogaCartaNoTabuleiro:: Card -> [Card] -> [Card]
 jogaCartaNoTabuleiro carta [] = []
