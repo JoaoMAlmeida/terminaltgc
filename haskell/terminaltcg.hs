@@ -254,6 +254,7 @@ atualizarHPCarta (Card {ataque = ataqueJogador, poder = poderJogador}) (Card {no
 
 atacarCarta:: String -> String -> Jogador -> Jogador -> Jogador
 atacarCarta posicao posicaoInimiga (Jogador {cartasTabuleiro = tabJogador}) (Jogador{nomeJogador = nome, vidaJogador = vida, cartasTabuleiro = tabInimiga, mao = maoInimiga, jogarCarta = jogaCartaInimigo})
+  | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (verificaProvocar tabInimiga) && (poder (tabInimiga !! (read posicaoInimiga - 1)) == "Provocar") && (bool (tabJogador !! (read posicao - 1))) = Jogador nome vida novoTab maoInimiga jogaCartaInimigo
   | posicao <= "3" && posicao >="1" && posicaoInimiga <= "3" && posicaoInimiga >= "1" && (not (verificaProvocar tabInimiga)) && (bool (tabJogador !! (read posicao - 1))) = Jogador nome vida novoTab maoInimiga jogaCartaInimigo
   | otherwise = Jogador nome vida tabInimiga maoInimiga jogaCartaInimigo
   where
