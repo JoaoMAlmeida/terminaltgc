@@ -2,6 +2,25 @@
 dynamic reiDaMontanha(Nome, Ataque, Vida, Poder, Bool).
 dynamic loboCeleste(Nome, Ataque, Vida, Poder, Bool).
 dynamic espectroNegro(Nome, Ataque, Vida, Poder, Bool).
+dynamic reiDaMontanha(Nome, Ataque, Vida, Poder, Bool).
+dynamic loboCeleste(Nome, Ataque, Vida, Poder, Bool).
+dynamic espectroNegro(Nome, Ataque, Vida, Poder, Bool).
+dynamic fortex(Nome, Ataque, Vida, Poder, Bool).
+dynamic ogroNegro(Nome, Ataque, Vida, Poder, Bool).
+dynamic dellOFort(Nome, Ataque, Vida, Poder, Bool).
+dynamic hPn01(Nome, Ataque, Vida, Poder, Bool).
+dynamic javas(Nome, Ataque, Vida, Poder, Bool).
+dynamic cPlusivel(Nome, Ataque, Vida, Poder, Bool).
+dynamic antonelaASereia(Nome, Ataque, Vida, Poder, Bool).
+dynamic nokiaTijolao(Nome, Ataque, Vida, Poder, Bool).
+dynamic zeDaPeixeira(Nome, Ataque, Vida, Poder, Bool).
+dynamic mosntroDonATAL(Nome, Ataque, Vida, Poder, Bool).
+dynamic ogroAlbino(Nome, Ataque, Vida, Poder, Bool).
+dynamic deadLine(Nome, Ataque, Vida, Poder, Bool).
+dynamic cortanaAAntipatica(Nome, Ataque, Vida, Poder, Bool).
+dynamic mercurioAlado(Nome, Ataque, Vida, Poder, Bool).
+dynamic ciriAEngracada(Nome, Ataque, Vida, Poder, Bool).
+dynamic cartaNula(Nome, Ataque, Vida, Poder, Bool).
 
 dynamic jogador1(NomeJogador1, VidaJogador1, CartasTabuleiro1, Mao1, JogarCarta1).
 dynamic jogador2(NomeJogador2, VidaJogador2, CartasTabuleiro2, Mao2, JogarCarta2).
