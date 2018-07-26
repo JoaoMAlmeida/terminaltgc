@@ -1,3 +1,5 @@
+:- style_check(-singleton).
+:- initialization main.
 
 dynamic reiDaMontanha(Nome, Ataque, Vida, Poder, Bool).
 dynamic loboCeleste(Nome, Ataque, Vida, Poder, Bool).
@@ -38,15 +40,14 @@ cardsMaker(1):- assert(cards([reiDaMontanha("Rei da Montanha", 3, 2, "Iniciativa
 jogadorMaker(1):- assert(jogador1("Jogador1",10,3,3,true)).
 jogadorMaker(2):- assert(jogador2("Jogador2",10,3,3,true)).
 
+campo([Card1, Card2, Card3]).
+mao([Card1, Card2, Card3]).
 
 imprimeTopo():-
   jogador1(_,VidaJogador1,_,_,_),
   jogador2(_,VidaJogador2,_,_,_),
   write("-----------------------------------------"),nl,
   write("Vida Jogador 1= "),write(VidaJogador1),write(" | "),write("Vida Jogador 2="),write(VidaJogador2),nl.
-
-:- set_prolog_flag(verbose, silent).
-:- initialization main.
 
 main :-
   shell(clear), nl,
@@ -86,6 +87,24 @@ main :-
   write("aaabbb"),nl,
   read(Nome),nl,
   write(Nome),nl.
+
+  jogarCarta(Jogador) :-
+    (Jogador is jogador1(_,_,Campo,Mao, true); Jogador is jogador2(_,_,Campo, Mao, true)),
+    write("Escolha a carta a jogar (1, 2 ou 3)"), nl,
+    read(CardIndex), nl,
+    jogarCartaRecursivo(Campo, Mao, CardIndex).
+
+  jogarCartaRecursivo(campo([Head|Tail]), Mao, CardIndex) :-
+    Mao is mao([CardMao1, CardMao2, CardMao3]),
+    CartaNula is cartaNula(_,_,_,_,_),
+    (Head is CartaNula -> (retract(campo([Head|Tail])),
+    assert(campo([CardMao|Tail]))),
+    CardMao is (((CardIndex is 1 -> CardMao1), retract(Mao), assert(mao([CartaNula, CardMao2, CardMao3])));
+    ((CardIndex is 2 -> CardMao2), retract(Mao), assert(mao([CardMao1, CartaNula, CardMao3])));
+    ((CardIndex is 3 -> CardMao3), retract(Mao), assert(mao([CardMao1, CardMao2, CartaNula])))));
+    jogarCartaRecursivo(Tail, Mao, CardIndex).
+
+
   % shell(clear),
   %
   % current_prolog_flag(argv, Argv),
