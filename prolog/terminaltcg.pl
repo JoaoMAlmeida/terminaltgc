@@ -72,8 +72,22 @@ imprimeTab:-
   write("-------------------------------------------"),nl,
   write("Turno: Jogador 2:"),nl.
 
-  opcoes:-
-  write("JC - Jogar Carta | AJ - Atacar Jogador | AC - Atacar Carta | FT - Finalizar Turno"),nl.
+  menu:-
+  write("1 - Jogar Carta | 2 - Atacar Jogador | 3 - Atacar Carta | 4 - Finalizar Turno"),nl,
+  read(Opcao),
+  opcoes(Opcao).
+
+opcoes(1):-
+write("JOGANDO CARTA"),nl.
+
+opcoes(2):-
+write("ATACANDO JOGADOR"),nl.
+
+opcoes(3):-
+write("ATACANDO CARTA"),nl.
+
+opcoes(4):-
+write("FINALIZANDO TURNO"),nl.
 
 
 
@@ -93,7 +107,7 @@ turno(Jog) :-
 imprimeTopo(),
 imprimeTab,
 maojogador(Jog),
-opcoes.
+menu.
 
 
 
