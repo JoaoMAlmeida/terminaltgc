@@ -102,7 +102,13 @@ imprimeTab(CardsTab):-
   opcoes(Opcao, Jog, CardsTab, CardsMao).
 
 opcoes(1, Jog, CardsTab, CardsMao):-
-write("JOGANDO CARTA"),nl.
+write("JOGANDO CARTA"),nl,
+write("Escolha uma carta (1, 2 ou 3)"), nl,
+read(CardIndex),
+CardIndex1 is CardIndex - 1,
+CardIndex2 is (CardIndex * 2) - 1,
+((Jog =:= 1 -> jogaCarta(Jog, CardsTab, CardsMao, CardIndex1));
+jogaCarta(Jog, CardsTab, CardsMao, CardIndex2)).
 
 opcoes(2, Jog, CardsTab, CardsMao):-
 write("ATACANDO JOGADOR"),nl.
@@ -127,6 +133,64 @@ atacaJog(Jog, Dano) :-(
   (NovaVida > 0) -> assert(jogador1(NomeJogador1, NovaVida, CartasTabuleiro1, Mao1, JogarCarta1))).
 
 
+% jogaCarta(Jog, CardsTab, CardsMao, CardIndex) :-
+%   CartaNula = ["", 0, 0, "", false],
+%   (Jog =:= 1 ->
+%     ((nth0(0,CardsTab,Card1),
+%     write(Card1), nl,
+%     cartasIguais(CartaNula, Card1),
+%     nth0(CardIndex,CardsMao,CardMao1),
+%     write(CardMao1), nl,
+%     subElem(0, CardMao1, CardsTab, ResultTab1),
+%     write(ResultTab1), nl,
+%     subElem(CardIndex, CartaNula, CardsMao, ResultMao1),
+%     write(ResultMao1), nl,
+%     turno(Jog, ResultTab1, ResultMao1)))).
+  % turno(Jog, CardsTab, CardsMao).
+
+jogaCarta(Jog, CardsTab, CardsMao, CardIndex) :-
+  CartaNula = ["", 0, 0, "", false],
+  ((Jog =:= 1 -> ((nth0(0,CardsTab,Card1),
+  cartasIguais(CartaNula, Card1),
+  nth0(CardIndex,CardsMao,CardMao1),
+  subElem(0, CardMao1, CardsTab, ResultTab1),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao1),
+  turno(Jog, ResultTab1, ResultMao1));
+  (nth0(1,CardsTab,Card2),
+  cartasIguais(CartaNula, Card2),
+  nth0(CardIndex,CardsMao,CardMao2),
+  subElem(1, CardMao2, CardsTab, ResultTab2),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao2),
+  turno(1, ResultTab2, ResultMao2));
+  (nth0(2,CardsTab,Card3),
+  cartasIguais(CartaNula, Card3),
+  nth0(CardIndex,CardsMao,CardMao3),
+  subElem(2, CardMao3, CardsTab, ResultTab3),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao3),
+  turno(1, ResultTab3, ResultMao3))));
+
+  (Jog =:= 2 -> ((nth0(3,CardsTab,Card4),
+  cartasIguais(CartaNula, Card4),
+  nth0(CardIndex,CardsMao,CardMao4),
+  subElem(3, CardMao4, CardsTab, ResultTab4),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao4),
+  turno(2, ResultTab4, ResultMao4));
+  (nth0(4,CardsTab,Card5),
+  cartasIguais(CartaNula, Card5),
+  nth0(CardIndex,CardsMao,CardMao5),
+  subElem(4, CardMao5, CardsTab, ResultTab5),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao5),
+  turno(2, ResultTab5, ResultMao5));
+  (nth0(5,CardsTab,Card6),
+  cartasIguais(CartaNula, Card6),
+  nth0(CardIndex,CardsMao,CardMao6),
+  subElem(5, CardMao6, CardsTab, ResultTab6),
+  subElem(CardIndex, CartaNula, CardsMao, ResultMao6),
+  turno(2, ResultTab6, ResultMao6)))));
+  turno(Jog, CardsTab, CardsMao).
+
+
+
 turno(Jog,CardsTab, CardsMao) :-
   shell(clear), nl,
   imprimeTopo(),
@@ -146,19 +210,19 @@ main:-
 
   cardsMaker(1),
   CardsTab =[
-    ["Rei da Montanha", 3, 2, "Iniciativa"],
-    ["Lobo Celeste", 2, 1, "Nenhum"],
-    ["Espectro Negro", 1, 1, "Ataque duplo"],
+    ["", 0, 0, "", false],
+    ["Lobo Celeste", 2, 1, "Nenhum", false],
+    ["Espectro Negro", 1, 1, "Ataque duplo", false],
     ["", 0, 0, "", false],
     ["", 0, 0, "", false],
-    ["", 0, 0, "", false]],nl,
+    ["Rei da Montanha", 3, 2, "Iniciativa", true]],nl,
 
   CardsMao = [
+      ["Rei da Montanha", 3, 2, "Iniciativa", true],
       ["", 0, 0, "", false],
       ["", 0, 0, "", false],
       ["", 0, 0, "", false],
-      ["", 0, 0, "", false],
-      ["", 0, 0, "", false],
+      ["Rei da Montanha", 3, 2, "Iniciativa", true],
       ["", 0, 0, "", false]
   ],
 
@@ -166,3 +230,21 @@ main:-
   read(INPUT),
   turno(INPUT,CardsTab, CardsMao),
   main.
+
+
+
+  % Adiciona um elemento numa dada posicao
+  addElem(0, Elem, Y, [Elem|Y]).
+  addElem(Index, Elem, [Head|Tail], [Head|Result]) :-
+    NewIndex is Index - 1,
+    addElem(NewIndex, Elem, Tail, Result).
+
+    %Substitui um elem numa certa posicao
+  subElem(0, Elem, [_|Tail], [Elem|Tail]).
+  subElem(Index, Elem, [Head|Tail], [Head|Result]) :-
+    NewIndex is Index - 1,
+    subElem(NewIndex, Elem, Tail, Result).
+
+  cartasIguais([Nome,_,_,_,Bool], [Nome2,_,_,_,Bool2]) :-
+    Nome = Nome2,
+    Bool = Bool2.
