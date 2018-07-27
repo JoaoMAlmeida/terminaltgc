@@ -75,8 +75,8 @@ opcoes(3, Jog,Cards, CardsTab, CardsMao):-
 write("ATACANDO CARTA"),nl.
 
 opcoes(4, Jog,Cards, CardsTab, CardsMao):-
-  (((Jog =:= 1) -> setMaoJogador(2,Cards,CardsTab));
-  setMaoJogador(1,Cards,CardsTab)).
+  (((Jog =:= 1) -> puxaCarta(2, Cards, CardsTab, CardsMao));
+  puxaCarta(1, Cards, CardsTab, CardsMao)).
 
 atacaJog(Jog, Dano) :-(
   (Jog =:= 2) ->  jogador2(NomeJogador2, VidaJogador2, CartasTabuleiro2, Mao2, JogarCarta2),
@@ -91,14 +91,12 @@ atacaJog(Jog, Dano) :-(
 
 jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex) :-
   CartaNula = ["", 0, 0, "", false],
-  write("entrei"), nl, write(CardIndex), nl,
   ((Jog =:= 1 -> ((nth0(0,CardsTab,Card1),
-  write(Card1), nl,
   cartasIguais(CartaNula, Card1),
   nth0(CardIndex,CardsMao,CardMao1),
   swapElem(0, CardMao1, CardsTab, ResultTab1),
   swapElem(CardIndex, CartaNula, CardsMao, ResultMao1),
-  turno(Jog, Cards, ResultTab1, ResultMao1));
+  turno(1, Cards, ResultTab1, ResultMao1));
   (nth0(1,CardsTab,Card2),
   cartasIguais(CartaNula, Card2),
   nth0(CardIndex,CardsMao,CardMao2),
@@ -111,7 +109,6 @@ jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex) :-
   swapElem(2, CardMao3, CardsTab, ResultTab3),
   swapElem(CardIndex, CartaNula, CardsMao, ResultMao3),
   turno(1, Cards, ResultTab3, ResultMao3))));
-  write(CardsMao),
   (Jog =:= 2 -> ((nth0(3,CardsTab,Card4),
   cartasIguais(CartaNula, Card4),
   nth0(CardIndex,CardsMao,CardMao4),
@@ -132,13 +129,42 @@ jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex) :-
   turno(2, Cards, ResultTab6, ResultMao6)))));
   turno(Jog, Cards, CardsTab, CardsMao).
 
+puxaCarta(Jog, Cards, CardsTab, CardsMao) :-
+  CartaNula = ["", 0, 0, "", false],
+  random(0,18,Random),nth0(Random,Cards,RandomCard),
+  ((Jog =:= 1 -> ((nth0(0,CardsMao,Card1),
+  cartasIguais(CartaNula, Card1),
+  swapElem(0, RandomCard, CardsMao, ResultMao1),
+  turno(1, Cards, CardsTab, ResultMao1));
+  (nth0(1,CardsMao,Card2),
+  cartasIguais(CartaNula, Card2),
+  swapElem(1, RandomCard, CardsMao, ResultMao2),
+  turno(1, Cards, CardsTab, ResultMao2));
+  (nth0(2,CardsMao,Card3),
+  cartasIguais(CartaNula, Card3),
+  swapElem(2, RandomCard, CardsMao, ResultMao3),
+  turno(1, Cards, CardsTab, ResultMao3))));
+  (Jog =:= 2 -> ((nth0(3,CardsMao,Card4),
+  cartasIguais(CartaNula, Card4),
+  swapElem(3, RandomCard, CardsMao, ResultMao4),
+  turno(2, Cards, CardsTab, ResultMao4));
+  (nth0(4,CardsMao,Card5),
+  cartasIguais(CartaNula, Card5),
+  swapElem(4, RandomCard, CardsMao, ResultMao5),
+  turno(2, Cards, CardsTab, ResultMao5));
+  (nth0(5,CardsMao,Card6),
+  cartasIguais(CartaNula, Card6),
+  swapElem(5, RandomCard, CardsMao, ResultMao6),
+  turno(2, Cards, CardsTab, ResultMao6)))));
+  turno(Jog, Cards, CardsTab, CardsMao).
+
 setMaoJogador(Jog,Cards,CardsTab):-
-  random(0,19,X),nth0(X,Cards,Card1),
-  random(0,19,Y),nth0(Y,Cards,Card2),
-  random(0,19,Z),nth0(Z,Cards,Card3),
-  random(0,19,A),nth0(A,Cards,Card4),
-  random(0,19,B),nth0(B,Cards,Card5),
-  random(0,19,C),nth0(C,Cards,Card6),
+  random(0,18,X),nth0(X,Cards,Card1),
+  random(0,18,Y),nth0(Y,Cards,Card2),
+  random(0,18,Z),nth0(Z,Cards,Card3),
+  random(0,18,A),nth0(A,Cards,Card4),
+  random(0,18,B),nth0(B,Cards,Card5),
+  random(0,18,C),nth0(C,Cards,Card6),
 
   % write(Card1).
   CardsMao = [
