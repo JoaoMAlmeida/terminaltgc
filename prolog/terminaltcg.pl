@@ -61,7 +61,12 @@ read(Opcao),
 opcoes(Opcao, Jog,Cards, CardsTab, CardsMao).
 
 opcoes(1, Jog,Cards, CardsTab, CardsMao):-
-write("JOGANDO CARTA"),nl.
+  write("Escolha uma carta (1, 2 ou 3)"), nl,
+  read(CardIndex),
+  CardIndex1 is CardIndex - 1,
+  CardIndex2 is (CardIndex + 2),
+  ((Jog =:= 1 -> jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex1));
+  jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex2)).
 
 opcoes(2, Jog,Cards, CardsTab, CardsMao):-
 write("ATACANDO JOGADOR"),nl.
@@ -83,6 +88,49 @@ atacaJog(Jog, Dano) :-(
   NovaVida is (VidaJogador1 - Dano),
   (retract(jogador2(NomeJogador1, VidaJogador1, CartasTabuleiro1, Mao1, JogarCarta1))),
   (NovaVida > 0) -> assert(jogador1(NomeJogador1, NovaVida, CartasTabuleiro1, Mao1, JogarCarta1))).
+
+jogaCarta(Jog, Cards, CardsTab, CardsMao, CardIndex) :-
+  CartaNula = ["", 0, 0, "", false],
+  write("entrei"), nl, write(CardIndex), nl,
+  ((Jog =:= 1 -> ((nth0(0,CardsTab,Card1),
+  write(Card1), nl,
+  cartasIguais(CartaNula, Card1),
+  nth0(CardIndex,CardsMao,CardMao1),
+  swapElem(0, CardMao1, CardsTab, ResultTab1),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao1),
+  turno(Jog, Cards, ResultTab1, ResultMao1));
+  (nth0(1,CardsTab,Card2),
+  cartasIguais(CartaNula, Card2),
+  nth0(CardIndex,CardsMao,CardMao2),
+  swapElem(1, CardMao2, CardsTab, ResultTab2),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao2),
+  turno(1, Cards, ResultTab2, ResultMao2));
+  (nth0(2,CardsTab,Card3),
+  cartasIguais(CartaNula, Card3),
+  nth0(CardIndex,CardsMao,CardMao3),
+  swapElem(2, CardMao3, CardsTab, ResultTab3),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao3),
+  turno(1, Cards, ResultTab3, ResultMao3))));
+  write(CardsMao),
+  (Jog =:= 2 -> ((nth0(3,CardsTab,Card4),
+  cartasIguais(CartaNula, Card4),
+  nth0(CardIndex,CardsMao,CardMao4),
+  swapElem(3, CardMao4, CardsTab, ResultTab4),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao4),
+  turno(2, Cards, ResultTab4, ResultMao4));
+  (nth0(4,CardsTab,Card5),
+  cartasIguais(CartaNula, Card5),
+  nth0(CardIndex,CardsMao,CardMao5),
+  swapElem(4, CardMao5, CardsTab, ResultTab5),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao5),
+  turno(2, Cards, ResultTab5, ResultMao5));
+  (nth0(5,CardsTab,Card6),
+  cartasIguais(CartaNula, Card6),
+  nth0(CardIndex,CardsMao,CardMao6),
+  swapElem(5, CardMao6, CardsTab, ResultTab6),
+  swapElem(CardIndex, CartaNula, CardsMao, ResultMao6),
+  turno(2, Cards, ResultTab6, ResultMao6)))));
+  turno(Jog, Cards, CardsTab, CardsMao).
 
 setMaoJogador(Jog,Cards,CardsTab):-
   random(0,19,X),nth0(X,Cards,Card1),
@@ -159,3 +207,19 @@ main:-
   setMaoJogador(1,Cards,CardsMao),
   % turno(1,Cards,CardsTab, CardsMao),
   main.
+
+  % Adiciona um elemento numa dada posicao
+  addElem(0, Elem, Y, [Elem|Y]).
+  addElem(Index, Elem, [Head|Tail], [Head|Result]) :-
+    NewIndex is Index - 1,
+    addElem(NewIndex, Elem, Tail, Result).
+
+  %Substitui um elem numa certa posicao
+  swapElem(0, Elem, [_|Tail], [Elem|Tail]).
+  swapElem(Index, Elem, [Head|Tail], [Head|Result]) :-
+    NewIndex is Index - 1,
+    swapElem(NewIndex, Elem, Tail, Result).
+
+  cartasIguais([Nome,_,_,_,Bool], [Nome2,_,_,_,Bool2]) :-
+    Nome = Nome2,
+    Bool = Bool2.
